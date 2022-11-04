@@ -12,10 +12,22 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld()
+    this.checkCollisions();
   }
 
   setWorld() {
     this.character.world = this;
+  }
+
+  checkCollisions() {
+    setInterval(() => {
+      this.level.enemies.forEach((enemy) => {
+        if(this.character.isColliding(enemy)) {
+          console.log('collision with character:w ', enemy);
+        }
+        
+      })
+    }, 200);
   }
 
   draw() {
@@ -48,20 +60,32 @@ class World {
   addToMap(mo) {
     //Bilder spiegeln wenn Character nach links läuft
     if (mo.otherDirection) {
-      this.ctx.save();
-      this.ctx.translate(mo.width, 0);
-      this.ctx.scale(-1, 1);
-      //X-Koordinate muss negiert werdern weil jetzt von rechts gezählt wird
-      mo.x = mo.x * -1;
+      this.flipImage(mo);
     }
 
-    this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+    mo.draw(this.ctx);
+    mo.drawFrame(this.ctx);
+
 
     //Bilder spiegeln wenn Character nach links läuft
     if(mo.otherDirection) {
-      //X-Koordinate wird wieder negiert
-      mo.x = mo.x * -1;
-      this.ctx.restore();
+      this.flipImageBack(mo);
     }
   }
+
+  flipImage(mo) {
+    this.ctx.save();
+    this.ctx.translate(mo.width, 0);
+    this.ctx.scale(-1, 1);
+    //X-Koordinate muss negiert werdern weil jetzt von rechts gezählt wird
+    mo.x = mo.x * -1;
+  }
+
+  flipImageBack(mo) {
+    //X-Koordinate wird wieder negiert
+    mo.x = mo.x * -1;
+    this.ctx.restore();
+  }
 }
+
+
