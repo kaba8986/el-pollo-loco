@@ -11,6 +11,7 @@ class MovableObject {
   speedY = 0;
   acceleration = 3;
   energy = 100;
+  lastHit = 0;
 
   applyGravity() {
     setInterval(() => {
@@ -47,18 +48,38 @@ class MovableObject {
 
 
   //Formel zur Kollisionsberechnung - z.B. character.isCollidiing(chicken)
-  
+
   isColliding(obj) {
     /*
     return (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) &&
       (this.Y + this.offsetY + this.height) >= obj.Y &&
       (this.Y + this.offsetY) <= (obj.Y + obj.height);
     */
-   return this.x + this.width > obj.x &&
+    return this.x + this.width > obj.x &&
       this.y + this.height > obj.y &&
       this.x < obj.x &&
       this.y < obj.y + obj.height;
-}
+  }
+
+  hit() {
+    this.energy -= 5;
+    if(this.energy < 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime();
+    }
+  }
+
+
+  isHurt() {
+    let timePassed = new Date().getTime() - this.lastHit; // difference in ms
+    return timePassed < 1000;
+  }
+
+
+  isDead() {
+    return this.energy == 0;
+  }
 
 
   loadImages(arr) {
