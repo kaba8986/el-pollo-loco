@@ -67,19 +67,20 @@ body {
   height: 480px;
 }
 
-#explanations {
+#game-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  margin-top: 20px;
   width: 100%;
   height: 50px;
-  margin-top: 15px;
   border-radius: 8px;
 }
 
-#explanations button {
+
+#game-buttons button {
  padding: 12px 20px;
+ margin: 0 5px;
  background: rgb(187, 106, 0);
  color: rgb(255, 234, 208);
  border: 3px solid rgb(78, 38, 15);
@@ -88,7 +89,7 @@ body {
  cursor: pointer;
 }
 
-#explanations button:hover {
+#game-buttons button:hover {
   background: rgb(255, 220, 173);
   color: rgb(78, 38, 15);
 }

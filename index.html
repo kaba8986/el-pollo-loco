@@ -29,21 +29,10 @@
 
 <body onload="init()">
   <img id="bg-img" src="img/title_background.jpg" alt="">
-  <div id="headline">
-    <h1>El Pollo Loco</h1>
-  </div>
   
   <div id="content">
     <div id="start-screen">
       <img id="start-img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
-      <div id="explanations">
-        <div class="ex-main">
-          <button id="start-game" onclick="startGame()">Start Game</button>
-          <button id="controls" onclick="showControls()">Controls</button>
-          <button id="help">Help</button>
-        </div>
-        <button id="back" class="d-none" onclick="goBack()">Back</button>
-      </div>
     </div>
     <div id="control-screen">
       <table>
@@ -72,6 +61,13 @@
     <div id="end-screen" class="d-none" >
     </div>
   </div>
+  <div id="game-buttons">
+    <div class="main-buttons">
+      <button id="start-game" onclick="startGame()">Start Game</button>
+      <button id="controls" onclick="showControls()">Controls</button>
+    </div>
+    <button id="back" class="d-none" onclick="goBack()">Back</button>
+  </div>
 
   <div id="footline">
     <a href="https://www.freepik.com/free-vector/empty-desert-forest-landscape-sunset-time-scene_15951483.htm#query=desert%20cartoon&position=15&from_view=search&track=sph">Image by brgfx </a><span>on Freepik</span>
@@ -86,7 +82,6 @@
 <!-- Todo -->
 
 <!-- 
-- Start Screen
 - Musik und Sounds
 - Coins einsammeln
 - Flaschen einsammeln
