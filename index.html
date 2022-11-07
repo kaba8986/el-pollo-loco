@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/b7a5700e28.js" crossorigin="anonymous"></script>
   <script src="models/drawable-object.class.js"></script>
   <script src="models/movable-object.class.js"></script>
   <script src="models/throwable-object.class.js"></script>
@@ -21,14 +22,60 @@
   <script src="models/level.class.js"></script>
   <script src="models/endboss.class.js"></script>
   <script src="levels/level1.js"></script>
+  <script src="js/script.js"></script>
   <script src="js/game.js"></script>
   <title>El Pollo Loco</title>
 </head>
 
 <body onload="init()">
-  <h1>El Pollo Loco</h1>
+  <img id="bg-img" src="img/title_background.jpg" alt="">
+  <div id="headline">
+    <h1>El Pollo Loco</h1>
+  </div>
+  
+  <div id="content">
+    <div id="start-screen">
+      <img id="start-img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+      <div id="explanations">
+        <div class="ex-main">
+          <button id="start-game" onclick="startGame()">Start Game</button>
+          <button id="controls" onclick="showControls()">Controls</button>
+          <button id="help">Help</button>
+        </div>
+        <button id="back" class="d-none" onclick="goBack()">Back</button>
+      </div>
+    </div>
+    <div id="control-screen">
+      <table>
+        <tr>
+          <td class="key"><i class="fa-solid fa-arrow-left"></i></td>
+          <td class="reaction"><span>Move Character Left</span></td>
+        </tr>
+        <tr>
+          <td class="key"><i class="fa-solid fa-arrow-right"></i></td>
+          <td class="reaction"><span>Move Character Right</span></td>
+        </tr>
+        <tr>
+          <td class="key"><b>SPACE</b></td>
+          <td class="reaction"><span>Let Character Jump</span></td>
+        </tr>
+        <tr>
+          <td class="key"><b>D</b></td>
+          <td class="reaction"><span>Throw A Bottle</span></td>
+        </tr>
+      </table>
 
-  <canvas id="canvas" width="720" height="480"></canvas>
+    </div>
+    <div id="game-screen" class="d-none" >
+      <canvas id="canvas" width="720" height="480"></canvas>
+    </div>
+    <div id="end-screen" class="d-none" >
+    </div>
+  </div>
+
+  <div id="footline">
+    <a href="https://www.freepik.com/free-vector/empty-desert-forest-landscape-sunset-time-scene_15951483.htm#query=desert%20cartoon&position=15&from_view=search&track=sph">Image by brgfx </a><span>on Freepik</span>
+  </div>
 
   <!-- <img src="img\2_character_pepe\2_walk\W-21.png" width="50px" height="150px"> -->
 </body>
