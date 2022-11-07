@@ -21,6 +21,7 @@
   <script src="models/keyboard.class.js"></script>
   <script src="models/level.class.js"></script>
   <script src="models/endboss.class.js"></script>
+  <script src="models/coin.class.js"></script>
   <script src="levels/level1.js"></script>
   <script src="js/script.js"></script>
   <script src="js/game.js"></script>
@@ -53,10 +54,11 @@
           <td class="reaction"><span>Throw A Bottle</span></td>
         </tr>
       </table>
-
     </div>
+    <!-- MAIN-SCREEN GAME  -->
     <div id="game-screen" class="d-none" >
       <canvas id="canvas" width="720" height="480"></canvas>
+      <div id="full-screen"><i class="fa-solid fa-expand" onclick="toggleFullscreen()"></i></div>
     </div>
     <div id="end-screen" class="d-none" >
     </div>
@@ -89,6 +91,4 @@
 - Collision
 - Endgegner besiegen
 - Game-Over-Screen
-- Full-Screen-Mode (vorhandener Befehl googeln)
-- Erklärung welche Tasten 
 -->

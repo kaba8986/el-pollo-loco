@@ -54,9 +54,10 @@ class World {
 
     this.ctx.translate(this.camera_x, 0);
 
-
+    //Background Elements
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
+
 
     //Cam back
     this.ctx.translate(-this.camera_x, 0);
@@ -67,8 +68,10 @@ class World {
     //Cam forward
     this.ctx.translate(this.camera_x, 0);
 
+    //Foreground Elements
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.throwableObjects);
 
 

@@ -60,6 +60,19 @@ body {
   object-fit: contain;
 }
 
+#full-screen {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+  padding: 6px 15px;
+  background: rgb(187, 106, 0);
+  color: rgb(255, 234, 208);
+  border: 3px solid rgb(78, 38, 15);
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
 /**** Start Screen ***/
 
 #start-screen {

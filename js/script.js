@@ -17,8 +17,20 @@ function showControls() {
   document.getElementById('back').classList.remove('d-none');
 }
 
+
 function goBack() {
   document.getElementById('control-screen').style.display = 'none';
   document.querySelector('.main-buttons').classList.remove('d-none');
   document.getElementById('back').classList.add('d-none');
+}
+
+
+function toggleFullscreen() {
+  let canvas = document.getElementById('canvas');
+  if(canvas.requestFullScreen)
+      canvas.requestFullScreen();
+  else if(canvas.webkitRequestFullScreen)
+      canvas.webkitRequestFullScreen();
+  else if(canvas.mozRequestFullScreen)
+      canvas.mozRequestFullScreen();
 }
