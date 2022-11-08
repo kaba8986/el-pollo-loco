@@ -32,6 +32,7 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkCoinCollision();
+      this.checkBottleCollision();
       this.checkThrowObjects();
     }, 200);
   }
@@ -66,6 +67,28 @@ class World {
     coin.width = 0;
     coin.height = 0;
     console.log('Counter after: ' + this.coinCounter);
+  }
+
+
+  checkBottleCollision() {
+    this.level.bottles.forEach((bottle) => {
+      if(this.character.isColliding(bottle) && bottle.width != 0 && bottle.height != 0) {
+        this.collectBottle(bottle);
+        this.statusBarBottle.setPercentage(this.bottleCounter);  
+        this.bottleSound.play();
+      }
+    })
+  }
+
+
+  collectBottle(bottle) {
+    console.log('Counter before: ' + this.bottleCounter);
+    if (this.bottleCounter < 5) {
+      this.bottleCounter++;
+    } 
+    bottle.width = 0;
+    bottle.height = 0;
+    console.log('Counter after: ' + this.bottleCounter);
   }
 
 

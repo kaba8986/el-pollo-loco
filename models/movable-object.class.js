@@ -28,7 +28,7 @@ class MovableObject extends DrawableObject {
   //Formel zur Kollisionsberechnung - z.B. character.isCollidiing(chicken)
 
   isColliding(obj) {
-    if(obj instanceof Coin) {
+    if(obj instanceof Coin || obj instanceof Bottle) {
       return this.x + this.width > obj.x &&
       this.y + this.height > obj.y &&
       this.x < obj.x &&
