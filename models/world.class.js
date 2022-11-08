@@ -12,6 +12,9 @@ class World {
   keyboard;
   camera_x = 0;
 
+  coinSound = new Audio('./audio/coin.mp3');
+  bottleSound = new Audio('./audio/bottle.mp3');
+
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
@@ -28,7 +31,7 @@ class World {
   run() {
     setInterval(() => {
       this.checkCollisions();
-      this.collideCoin();
+      this.checkCoinCollision();
       this.checkThrowObjects();
     }, 200);
   }
@@ -44,23 +47,28 @@ class World {
   }
 
 
-  collideCoin() {
+  checkCoinCollision() {
     this.level.coins.forEach((coin) => {
-      if(this.character.isColliding(coin)) {
-        this.collectCoin();
+      if(this.character.isColliding(coin) && coin.width != 0 && coin.height != 0) {
+        this.collectCoin(coin);
         this.statusBarCoin.setPercentage(this.coinCounter);
+        this.coinSound.play();
       }
     })
   }
 
 
-  collectCoin() {
+  collectCoin(coin) {
     console.log('Counter before: ' + this.coinCounter);
     if (this.coinCounter < 5) {
       this.coinCounter++;
     }
+    coin.width = 0;
+    coin.height = 0;
     console.log('Counter after: ' + this.coinCounter);
   }
+
+
 
 
 

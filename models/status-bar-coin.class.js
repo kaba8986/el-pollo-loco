@@ -9,7 +9,7 @@ class StatusBarCoin extends DrawableObject {
     './img/7_statusbars/1_statusbar/1_statusbar_coin/green/100.png'
   ];
 
-  percentage = 0; //Here a number between 0 and 4 - amount of coins
+  percentage = 0;
 
   constructor() {
     super();
@@ -23,7 +23,7 @@ class StatusBarCoin extends DrawableObject {
 
   //set Percentage
   setPercentage(percentage) {
-    this.percentage = percentage; // => 0 ... 4
+    this.percentage = percentage; // => 0 ... 5
     let path = this.IMAGES[percentage];
     this.img = this.imageCache[path];
   }
