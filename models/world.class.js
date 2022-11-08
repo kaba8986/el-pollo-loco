@@ -40,17 +40,17 @@ class World {
 
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if(this.character.isColliding(enemy)) {
+      if (this.character.isColliding(enemy)) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
-      } 
+      }
     })
   }
 
 
   checkCoinCollision() {
     this.level.coins.forEach((coin) => {
-      if(this.character.isColliding(coin) && coin.width != 0 && coin.height != 0) {
+      if (this.character.isColliding(coin) && coin.width != 0 && coin.height != 0) {
         this.collectCoin(coin);
         this.statusBarCoin.setPercentage(this.coinCounter);
         this.coinSound.play();
@@ -72,9 +72,9 @@ class World {
 
   checkBottleCollision() {
     this.level.bottles.forEach((bottle) => {
-      if(this.character.isColliding(bottle) && bottle.width != 0 && bottle.height != 0) {
+      if (this.character.isColliding(bottle) && bottle.width != 0 && bottle.height != 0) {
         this.collectBottle(bottle);
-        this.statusBarBottle.setPercentage(this.bottleCounter);  
+        this.statusBarBottle.setPercentage(this.bottleCounter);
         this.bottleSound.play();
       }
     })
@@ -85,21 +85,19 @@ class World {
     console.log('Counter before: ' + this.bottleCounter);
     if (this.bottleCounter < 5) {
       this.bottleCounter++;
-    } 
+    }
     bottle.width = 0;
     bottle.height = 0;
     console.log('Counter after: ' + this.bottleCounter);
   }
 
 
-
-
-
-
   checkThrowObjects() {
-    if(this.keyboard.D) {
+    if (this.keyboard.D && this.bottleCounter) {
       let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
       this.throwableObjects.push(bottle);
+      this.bottleCounter--;
+      this.statusBarBottle.setPercentage(this.bottleCounter);
     }
   }
 
@@ -157,7 +155,7 @@ class World {
 
 
     //Bilder spiegeln wenn Character nach links läuft
-    if(mo.otherDirection) {
+    if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
   }
