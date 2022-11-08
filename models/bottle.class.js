@@ -2,11 +2,20 @@ class Bottle extends MovableObject {
     height = 60;
     width = 50;
 
+    IMAGES = [
+        './img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
+        './img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
+    ];
 
     constructor() {
-        super().loadImage('./img/6_salsa_bottle/salsa_bottle.png');
+        super().loadImage(this.randomizeDirection());
 
-        this.y = 120 + Math.random()*200;
+        this.y = 370;
         this.x = 200 + Math.random()*1800;
+    }
+
+    randomizeDirection() {
+        let random = Math.round(Math.random());
+        return this.IMAGES[random];
     }
 }

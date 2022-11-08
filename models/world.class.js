@@ -47,6 +47,7 @@ class World {
     })
   }
 
+  
 
   checkCoinCollision() {
     this.level.coins.forEach((coin) => {
@@ -100,6 +101,10 @@ class World {
       this.statusBarBottle.setPercentage(this.bottleCounter);
     }
   }
+
+
+
+
 
   draw() {
 
