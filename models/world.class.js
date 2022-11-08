@@ -6,6 +6,7 @@ class World {
   throwableObjects = [];
   coinCounter = 0;
   bottleCounter = 5;
+  shootable = true;
   level = level1;
   canvas;
   ctx;
@@ -31,8 +32,9 @@ class World {
   run() {
     setInterval(() => {
       this.checkCollisions();
-      this.checkCoinCollision();
-      this.checkBottleCollision();
+      this.checkCoinHarvest();
+      this.checkBottleHarvest();
+      this.checkCollisionBottle();
       this.checkThrowObjects();
     }, 200);
   }
@@ -49,8 +51,8 @@ class World {
   }
 
   
-  //Collision with Coin
-  checkCoinCollision() {
+  //Harvesting Coins
+  checkCoinHarvest() {
     this.level.coins.forEach((coin) => {
       if (this.character.isColliding(coin) && coin.width != 0 && coin.height != 0) {
         this.collectCoin(coin);
@@ -72,8 +74,8 @@ class World {
   }
 
 
-  //Collision with Bottle
-  checkBottleCollision() {
+  //Harvesting Bottles
+  checkBottleHarvest() {
     this.level.bottles.forEach((bottle) => {
       if (this.character.isColliding(bottle) && bottle.width != 0 && bottle.height != 0) {
         this.collectBottle(bottle);
@@ -95,12 +97,42 @@ class World {
   }
 
 
+  checkCollisionBottle() {
+    this.level.enemies.forEach((enemy) => {
+      this.throwableObjects.forEach((bottle) => {
+        if(bottle.isColliding(enemy)) {
+          console.log('hit!');
+          //enemy.hit();
+          bottle.splash = true;
+        }
+      })
+    })
+  }
+
+  /*
+    checkCollisions() {
+    this.level.enemies.forEach((enemy) => {
+      if (this.character.isColliding(enemy)) {
+        this.character.hit();
+        this.statusBarHealth.setPercentage(this.character.energy);
+      }
+    })
+  }
+  */
+
+
   checkThrowObjects() {
     if (this.keyboard.D && this.bottleCounter) {
-      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-      this.throwableObjects.push(bottle);
-      this.bottleCounter--;
-      this.statusBarBottle.setPercentage(this.bottleCounter);
+      setTimeout(() => {
+        this.shootable = true;
+      }, 500);
+      if(this.shootable) {
+        let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        this.bottleCounter--;
+        this.statusBarBottle.setPercentage(this.bottleCounter);
+        this.throwableObjects.push(bottle);
+        this.shootable = false;
+      }
     }
   }
 

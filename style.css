@@ -135,6 +135,7 @@ table .key {
 
 canvas {
   background: #000;
+  display: block;
 }
 
 .d-none {
@@ -164,4 +165,19 @@ canvas {
 
 #footline a:hover {
   text-decoration: underline;
+}
+
+
+/***************** MEDIA ******************/
+
+@media  (max-width: 720px) {
+  canvas {
+    width: 100%;
+  }
+}
+
+  @media  (max-width: 480px) {
+    canvas {
+      height: 100vh;
+    }
 }

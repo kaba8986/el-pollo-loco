@@ -8,7 +8,7 @@ class MovableObject extends DrawableObject {
 
   applyGravity() {
     setInterval(() => {
-      if (this.isAboveGround() || this.speedY > 0) {
+      if (this.isAboveGround() || this.speedY > 0 ) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
@@ -19,8 +19,9 @@ class MovableObject extends DrawableObject {
     if ((this instanceof ThrowableObject)) { // Throwable Object should ALWAYS fall
       return true;
     }
-    return this.y < 160;
+      return this.y < 160;
   }
+
 
   //Formel zur Kollisionsberechnung - z.B. character.isCollidiing(chicken)
 
@@ -49,6 +50,13 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  dieCharacter() {
+    self = this.character;
+    setInterval(() => {
+      this.y += 10;
+    }, 100);
+  }
+
 
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit; // difference in ms
@@ -59,7 +67,6 @@ class MovableObject extends DrawableObject {
   isDead() {
     return this.energy == 0;
   }
-
 
 
   playAnimation(images) {
