@@ -5,7 +5,7 @@ class World {
   statusBarBottle = new StatusBarBottle();
   throwableObjects = [];
   coinCounter = 0;
-  bottleCounter = 0;
+  bottleCounter = 5;
   level = level1;
   canvas;
   ctx;
