@@ -38,6 +38,7 @@ class World {
   }
 
 
+  //Collision with Enemy
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
@@ -48,7 +49,7 @@ class World {
   }
 
   
-
+  //Collision with Coin
   checkCoinCollision() {
     this.level.coins.forEach((coin) => {
       if (this.character.isColliding(coin) && coin.width != 0 && coin.height != 0) {
@@ -71,6 +72,7 @@ class World {
   }
 
 
+  //Collision with Bottle
   checkBottleCollision() {
     this.level.bottles.forEach((bottle) => {
       if (this.character.isColliding(bottle) && bottle.width != 0 && bottle.height != 0) {

@@ -22,9 +22,6 @@ class MovableObject extends DrawableObject {
     return this.y < 160;
   }
 
-
-
-
   //Formel zur Kollisionsberechnung - z.B. character.isCollidiing(chicken)
 
   isColliding(obj) {
@@ -40,7 +37,6 @@ class MovableObject extends DrawableObject {
       this.y < obj.y + obj.height;
     }
   }
-
 
 
 

@@ -12,10 +12,13 @@ class Bottle extends MovableObject {
 
         this.y = 370;
         this.x = 200 + Math.random()*1800;
+        //this.distanceToNext();
     }
 
     randomizeDirection() {
         let random = Math.round(Math.random());
         return this.IMAGES[random];
     }
+
+
 }
