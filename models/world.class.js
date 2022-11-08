@@ -4,6 +4,8 @@ class World {
   statusBarCoin = new StatusBarCoin();
   statusBarBottle = new StatusBarBottle();
   throwableObjects = [];
+  coinCounter = 0;
+  bottleCounter = 0;
   level = level1;
   canvas;
   ctx;
@@ -26,6 +28,7 @@ class World {
   run() {
     setInterval(() => {
       this.checkCollisions();
+      this.collideCoin();
       this.checkThrowObjects();
     }, 200);
   }
@@ -39,6 +42,27 @@ class World {
       } 
     })
   }
+
+
+  collideCoin() {
+    this.level.coins.forEach((coin) => {
+      if(this.character.isColliding(coin)) {
+        this.collectCoin();
+        this.statusBarCoin.setPercentage(this.coinCounter);
+      }
+    })
+  }
+
+
+  collectCoin() {
+    console.log('Counter before: ' + this.coinCounter);
+    if (this.coinCounter < 5) {
+      this.coinCounter++;
+    }
+    console.log('Counter after: ' + this.coinCounter);
+  }
+
+
 
 
   checkThrowObjects() {

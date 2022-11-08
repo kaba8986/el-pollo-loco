@@ -16,7 +16,7 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    if((this instanceof ThrowableObject)) { // Throwable Object should ALWAYS fall
+    if ((this instanceof ThrowableObject)) { // Throwable Object should ALWAYS fall
       return true;
     }
     return this.y < 160;
@@ -58,6 +58,7 @@ class MovableObject extends DrawableObject {
   isDead() {
     return this.energy == 0;
   }
+
 
 
   playAnimation(images) {
