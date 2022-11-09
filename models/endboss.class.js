@@ -70,7 +70,7 @@ class Endboss extends MovableObject {
       } else {
         this.playAnimation(this.IMAGES_ATTACK);
       }
-      
+      // console.log(world.level.enemies[3].x - world.character.x)
     }, 200)
   }
 }
