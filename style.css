@@ -12,6 +12,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
   min-height: 100vh;
   position: relative;
 }
@@ -170,13 +171,17 @@ canvas {
 
 /***************** MEDIA ******************/
 
-@media  (max-width: 720px) {
+@media only screen and (max-width: 720px) {
+  content {
+    width: 100%;
+  }
+
   canvas {
     width: 100%;
   }
 }
 
-  @media  (max-width: 480px) {
+  @media only screen and (max-width: 480px) {
     canvas {
       height: 100vh;
     }

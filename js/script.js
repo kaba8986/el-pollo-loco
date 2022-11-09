@@ -2,8 +2,8 @@
 
 
 function startGame() {
-  canvas = document.getElementById('canvas');
-  world = new World(canvas, keyboard);
+    canvas = document.getElementById('canvas');
+    world = new World(canvas, keyboard);
     console.log('my character is ', world.character)
     document.getElementById('game-screen').classList.remove('d-none');
     document.getElementById('start-screen').classList.add('d-none');
