@@ -1,5 +1,5 @@
 class ThrowableObject extends MovableObject {
-  speedX = 20;
+  speedX = 10;
   speedY = 30;
   
 
@@ -24,13 +24,14 @@ class ThrowableObject extends MovableObject {
   throw() {
     this.speedY = 20;
     this.applyGravity();
-    setInterval(() => {
 
-        this.x += 10;
-      
+    setInterval(() => {
+        this.x += this.speedX;
     }, 25);
+
     setInterval(() => {
       this.playAnimation(this.IMAGES_ROTATE);
     }, 50);
   }
+
 }

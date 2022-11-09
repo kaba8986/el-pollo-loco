@@ -3,6 +3,7 @@ class Endboss extends MovableObject {
   height = 400;
   width = 250;
   y = 50;
+  isWalking = false;
 
 
 
@@ -70,7 +71,7 @@ class Endboss extends MovableObject {
       } else {
         this.playAnimation(this.IMAGES_ATTACK);
       }
-      // console.log(world.level.enemies[3].x - world.character.x)
+      // console.log(this.x - world.character.x);
     }, 200)
   }
 }
