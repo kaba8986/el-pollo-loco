@@ -17,7 +17,7 @@ class MovableObject extends DrawableObject {
 
   isAboveGround() {
     if ((this instanceof ThrowableObject)) { // Throwable Object should ALWAYS fall
-      return true;
+      return this.y < 360;
     }
       return this.y < 160;
   }
@@ -50,6 +50,7 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  //Pepe leaves display when killed
   dieCharacter() {
     self = this.character;
     setInterval(() => {
@@ -89,6 +90,11 @@ class MovableObject extends DrawableObject {
 
   jump() {
     this.speedY = 30;
+  }
+
+  removeObject() {
+    this.width = 0;
+    this.height = 0;
   }
 
 }

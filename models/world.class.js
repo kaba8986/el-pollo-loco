@@ -64,13 +64,11 @@ class World {
 
 
   collectCoin(coin) {
-    console.log('Counter before: ' + this.coinCounter);
     if (this.coinCounter < 5) {
       this.coinCounter++;
     }
     coin.width = 0;
     coin.height = 0;
-    console.log('Counter after: ' + this.coinCounter);
   }
 
 
