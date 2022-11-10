@@ -2,6 +2,7 @@ class ThrowableObject extends MovableObject {
   speedX = 10;
   speedY = 30;
   splashed = false;
+  enemyHit = false;
 
 
   IMAGES_ROTATE = [
@@ -29,35 +30,42 @@ class ThrowableObject extends MovableObject {
     this.height = 60;
     this.width = 50;
     this.throw();
+    this.checkSplash();
   }
 
   throw() {
-    this.speedY = 20;
-    this.applyGravity();
+    this.speedY = 20; 
+    if(!this.splashed) {
+      this.applyGravity();
+    }
 
     setInterval(() => {
       if(this.isAboveGround()) {
         this.x += this.speedX;
       }
     }, 25);
+  }
 
 
-    let int = setInterval(() => {
-      if(!this.isAboveGround()) {
+  /**
+   * Checks if either bottle hits enemy or ground
+   * @returns boolean
+   */
+  checkSplash() {
+    setInterval(() => {
+      if(!this.isAboveGround() || this.enemyHit) {
         if(this.splashed) {
           this.width = 0;
           this.height = 0;
-          //this.loadImage('./img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png');
+          this.loadImage('./img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png');
         } else {
-          this.playAnimation(this.IMAGES_SPLASH);
-          this.splashed = true;
+          this.playAnimation(this.IMAGES_SPLASH); 
+          this.splashed = true; //plays splash-imgs only once 
         }
       } else {
         this.playAnimation(this.IMAGES_ROTATE);
       }
-    }, 100);
+    }, 100)
   }
-
-
 
 }

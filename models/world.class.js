@@ -43,7 +43,7 @@ class World {
   //Collision with Enemy
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
+      if (this.character.isColliding(enemy) && enemy.energy) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
@@ -99,9 +99,11 @@ class World {
     this.level.enemies.forEach((enemy) => {
       this.throwableObjects.forEach((bottle) => {
         if(bottle.isColliding(enemy)) {
+          enemy.energy -= 25;
           console.log('hit!');
           //enemy.hit();
-          bottle.splash = true;
+          bottle.splashed = true;
+          console.log(bottle.splash);
         }
       })
     })

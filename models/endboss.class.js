@@ -4,6 +4,7 @@ class Endboss extends MovableObject {
   width = 250;
   y = 50;
   isWalking = false;
+  energy = 100;
 
 
 
