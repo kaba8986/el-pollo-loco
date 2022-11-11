@@ -39,6 +39,24 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  topBorder() {
+    return this.y + this.offset.top;
+  }
+
+  rightBorder() {
+    return this.x + this.width - this.offset.right;
+  }
+
+  bottomBorder() {
+    return this.y + this.height - this.offset.bottom;
+  }
+
+  leftBorder() {
+    return this.x + this.offset.left;
+  }
+
+
+
 
 
   hit() {

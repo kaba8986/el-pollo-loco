@@ -191,6 +191,7 @@ class World {
 
     mo.draw(this.ctx);
     mo.drawFrame(this.ctx);
+    mo.drawBorder(this.ctx);
 
 
     //Bilder spiegeln wenn Character nach links läuft

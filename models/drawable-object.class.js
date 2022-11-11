@@ -7,6 +7,13 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
+    offset = {
+        top: 110,
+        right: 20,
+        bottom: 15,
+        left: 20
+    }
+    
 
     loadImage(path) {
         this.img = new Image();
@@ -28,6 +35,16 @@ class DrawableObject {
           ctx.stroke();
         }
       }
+
+    drawBorder(ctx) {
+        if (this instanceof Character || this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'red';
+            ctx.rect(this.x + this.offset.left, this.y + this.offset.top, this.width - this.offset.left - this.offset.right, this.height - this.offset.top - this.offset.bottom);
+            ctx.stroke();
+        }
+    }
 
 
     loadImages(arr) {
