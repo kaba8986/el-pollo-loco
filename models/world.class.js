@@ -100,10 +100,10 @@ class World {
       this.throwableObjects.forEach((bottle) => {
         if(bottle.isColliding(enemy) && !bottle.splashed) {
           enemy.energy -= 25;
+          enemy.hit();
           console.log('hit!');
-          //enemy.hit();
+          console.log(enemy.energy);
           bottle.splashed = true;
-          console.log(bottle.splash);
         }
       })
     })

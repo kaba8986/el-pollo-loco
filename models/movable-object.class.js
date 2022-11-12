@@ -84,10 +84,9 @@ class MovableObject extends DrawableObject {
 
   //Pepe leaves display when killed
   dieCharacter() {
-    self = this.character;
     setInterval(() => {
       this.y += 10;
-    }, 100);
+    }, 50);
   }
 
 

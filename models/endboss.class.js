@@ -70,15 +70,23 @@ class Endboss extends MovableObject {
 
 
   animate() {
-    let i = 0;
     //Bilder wechseln
+    let dead = false;
     setInterval(() => {
+        if(this.isHurt()) {
+          this.playAnimation(this.IMAGES_HURT);
+        } else if(this.isDead() && !dead) {
+          this.playAnimation(this.IMAGES_DEAD);
+          dead = true;
+        } else if (dead) {
+          this.img.src = './img/4_enemie_boss_chicken/5_dead/G27.png';
+          setTimeout(() => {
+            this.dieCharacter();
+          }, 1300);
+        }else {
+          this.playAnimation(this.IMAGES_ALERT);  
+        }
 
-      if(i < 10) {
-        this.playAnimation(this.IMAGES_ALERT);  
-      } else {
-        this.playAnimation(this.IMAGES_ATTACK);
-      }
       // console.log(this.x - world.character.x);
     }, 200)
   }
