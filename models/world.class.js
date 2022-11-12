@@ -37,18 +37,33 @@ class World {
       this.checkCollisionBottle();
       this.checkThrowObjects();
     }, 200);
+
+    setInterval(() => {
+      this.checkJumpOnEnemy();
+    },  50);
   }
 
 
   //Collision with Enemy
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy) && enemy.energy) {
-        this.character.hit();
+      if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.energy) {
+        this.character.hit(); 
         this.statusBarHealth.setPercentage(this.character.energy);
+        console.log('ouw');
       }
-    })
+    });
   }
+
+  checkJumpOnEnemy() {
+    this.level.enemies.forEach((enemy) => {
+      if (this.character.isColliding(enemy) && this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof ChickenSmall)) {
+        console.log('jumped');
+        enemy.energy = 0;
+      }
+    });
+  }
+
 
   
   //Harvesting Coins
@@ -108,8 +123,6 @@ class World {
       })
     })
   }
-
-
 
 
   checkThrowObjects() {

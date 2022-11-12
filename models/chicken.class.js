@@ -7,9 +7,9 @@ class Chicken extends MovableObject {
   
   offset = {
     top: 0,
-    right: 0,
+    right: -20,
     bottom: 0,
-    left: 0
+    left: -20
 }
   
   IMAGES_WALKING = [
