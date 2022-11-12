@@ -25,6 +25,7 @@ class MovableObject extends DrawableObject {
 
   //Formel zur Kollisionsberechnung - z.B. character.isCollidiing(chicken)
 
+  /*
   isColliding(obj) {
     if(obj instanceof Coin || obj instanceof Bottle) {
       return this.x + this.width > obj.x &&
@@ -38,6 +39,22 @@ class MovableObject extends DrawableObject {
       this.y < obj.y + obj.height;
     }
   }
+  */
+
+  isColliding(obj) {
+    if(obj instanceof Coin || obj instanceof Bottle) {
+      return this.x + this.width > obj.x &&
+      this.y + this.height > obj.y &&
+      this.x < obj.x &&
+      this.y + 110 < obj.y + obj.height; //Subtract Part of Characters "empty" height
+    } else {
+      return this.rightBorder() > obj.rightBorder() &&
+      this.bottomBorder() > obj.topBorder() &&
+      this.leftBorder() < obj.x &&
+      this.y < obj.y + obj.height;
+    }
+  }
+
 
   topBorder() {
     return this.y + this.offset.top;
