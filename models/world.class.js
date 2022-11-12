@@ -131,6 +131,10 @@ class World {
       }, 500);
       if(this.shootable) {
         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        if(this.character.otherDirection) {
+          bottle.speedX *= -1;
+          bottle.x = this.character.x;
+        }
         this.bottleCounter--;
         this.statusBarBottle.setPercentage(this.bottleCounter);
         this.throwableObjects.push(bottle);
