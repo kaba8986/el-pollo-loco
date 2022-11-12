@@ -116,9 +116,8 @@ class World {
         if(bottle.isColliding(enemy) && !bottle.splashed) {
           enemy.energy -= 25;
           enemy.hit();
-          console.log('hit!');
-          console.log(enemy.energy);
-          bottle.splashed = true;
+          bottle.enemyHit = true;
+          // bottle.splashed = true;
         }
       })
     })
