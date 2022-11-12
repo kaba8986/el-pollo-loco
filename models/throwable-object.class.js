@@ -4,6 +4,12 @@ class ThrowableObject extends MovableObject {
   splashed = false;
   enemyHit = false;
 
+  offset = {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+}
 
   IMAGES_ROTATE = [
     './img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
