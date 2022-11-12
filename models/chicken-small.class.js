@@ -4,6 +4,8 @@ class ChickenSmall extends MovableObject {
     height = 30;
     width = 40;
     energy = 25;
+    kill_sound = new Audio('./audio/chicken_kill.mp3');
+    played = false;
 
     offset = {
       top: 0,
@@ -45,9 +47,11 @@ class ChickenSmall extends MovableObject {
     
         //Bilder wechseln
         setInterval(() => {
-          if(this.isDead()) {
+          if(this.isDead() && !this.played) {
+            this.kill_sound.play();
             this.playAnimation(this.IMAGES_DEAD);
             setTimeout(() => {
+              this.played = true;
               this.width = 0;
               this.height = 0;
             }, 1500);

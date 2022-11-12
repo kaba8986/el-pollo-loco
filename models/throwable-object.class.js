@@ -3,6 +3,8 @@ class ThrowableObject extends MovableObject {
   speedY = 30;
   splashed = false;
   enemyHit = false;
+  throwing_sound = new Audio('./audio/throw_bottle.mp3');
+  splash_sound = new Audio('audio/glass.mp3')
 
   offset = {
     top: 0,
@@ -40,6 +42,7 @@ class ThrowableObject extends MovableObject {
   }
 
   throw() {
+    this.throwing_sound.play();
     this.speedY = 20; 
     if(!this.splashed) {
       this.applyGravity();
@@ -65,6 +68,7 @@ class ThrowableObject extends MovableObject {
           this.height = 0;
           this.loadImage('./img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png');
         } else {
+          this.splash_sound.play();
           this.playAnimation(this.IMAGES_SPLASH); 
           this.splashed = true; //plays splash-imgs only once 
         }
