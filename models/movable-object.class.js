@@ -44,17 +44,12 @@ class MovableObject extends DrawableObject {
   */
 
   isColliding(obj) {
-    if(obj instanceof Coin || obj instanceof Bottle) {
-      return this.x + this.width > obj.x &&
-      this.y + this.height > obj.y &&
-      this.x < obj.x &&
-      this.y + 110 < obj.y + obj.height; //Subtract Part of Characters "empty" height
-    } else {
-      return this.rightBorder() > obj.rightBorder() &&
+
+      return this.rightBorder() > obj.leftBorder() &&
       this.bottomBorder() > obj.topBorder() &&
-      this.leftBorder() < obj.x &&
-      this.y < obj.y + obj.height;
-    }
+      this.leftBorder() < obj.rightBorder() &&
+      this.topBorder() < obj.bottomBorder();
+
   }
 
 
