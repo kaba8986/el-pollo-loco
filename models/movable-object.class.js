@@ -70,8 +70,6 @@ class MovableObject extends DrawableObject {
 
 
 
-
-
   hit() {
     this.energy -= 5;
     if (this.energy < 0) {
@@ -126,5 +124,10 @@ class MovableObject extends DrawableObject {
     this.width = 0;
     this.height = 0;
   }
+
+  distanceTo(obj) {
+    return this.x -  obj.x;
+  }
+
 
 }

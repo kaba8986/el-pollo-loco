@@ -5,6 +5,7 @@ class Endboss extends MovableObject {
   y = 50;
   isWalking = false;
   energy = 100;
+  speed = 25;
 
   offset = {
     top: 60,
@@ -75,8 +76,10 @@ class Endboss extends MovableObject {
     setInterval(() => {
         if(this.isHurt()) {
           this.playAnimation(this.IMAGES_HURT);
-        } else if (this.energy <= 75) {
+        } else if (this.energy <= 75 && this.distanceTo(world.character) > 0) {
           this.playAnimation(this.IMAGES_WALKING);
+          this.moveLeft();
+          console.log(this.distanceTo(world.character));
         } else if(this.isDead() && !dead) {
           this.playAnimation(this.IMAGES_DEAD);
           dead = true;
@@ -85,11 +88,20 @@ class Endboss extends MovableObject {
           setTimeout(() => {
             this.dieCharacter();
           }, 1300);
-        }else {
+        } else {
           this.playAnimation(this.IMAGES_ALERT);  
         }
 
       // console.log(this.x - world.character.x);
-    }, 200)
+    }, 150)
   }
+
+  /*
+  startWalking() {
+          if(this.distanceTo(world.character)) {
+            console.log(this.distanceTo(world.character));
+            this.moveLeft();
+          }     
+  }
+  */
 }

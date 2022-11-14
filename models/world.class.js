@@ -50,7 +50,6 @@ class World {
       if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.energy) {
         this.character.hit(); 
         this.statusBarHealth.setPercentage(this.character.energy);
-        console.log('ouw');
       }
     });
   }
@@ -58,7 +57,6 @@ class World {
   checkJumpOnEnemy() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof ChickenSmall)) {
-        console.log('jumped');
         enemy.energy = 0;
       }
     });
@@ -100,13 +98,11 @@ class World {
 
 
   collectBottle(bottle) {
-    console.log('Counter before: ' + this.bottleCounter);
     if (this.bottleCounter < 5) {
       this.bottleCounter++;
     }
     bottle.width = 0;
     bottle.height = 0;
-    console.log('Counter after: ' + this.bottleCounter);
   }
 
 
@@ -142,9 +138,6 @@ class World {
       }
     }
   }
-
-
-
 
 
   draw() {
@@ -197,8 +190,8 @@ class World {
     }
 
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
-    mo.drawBorder(this.ctx);
+    // mo.drawFrame(this.ctx);
+    // mo.drawBorder(this.ctx);
 
 
     //Bilder spiegeln wenn Character nach links läuft

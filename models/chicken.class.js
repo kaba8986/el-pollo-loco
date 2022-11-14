@@ -40,7 +40,6 @@ class Chicken extends MovableObject {
     //Hühner laufen
 
     setInterval(()=> {
-      console.log(this.otherDirection);
       if(!this.isDead()) {
           this.moveLeft();
       }
