@@ -31,46 +31,46 @@
 </head>
 
 <body>
-  <!-- <img id="bg-img" src="img/title_background.jpg" alt=""> -->
-  <div id="content">
-    <div id="start-screen">
-      <img id="start-img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
-    </div>
-    <div id="control-screen">
-      <table>
-        <tr>
-          <td class="key"><i class="fa-solid fa-arrow-left"></i></td>
-          <td class="reaction"><span>Move Character Left</span></td>
-        </tr>
-        <tr>
-          <td class="key"><i class="fa-solid fa-arrow-right"></i></td>
-          <td class="reaction"><span>Move Character Right</span></td>
-        </tr>
-        <tr>
-          <td class="key"><b>SPACE</b></td>
-          <td class="reaction"><span>Let Character Jump</span></td>
-        </tr>
-        <tr>
-          <td class="key"><b>D</b></td>
-          <td class="reaction"><span>Throw A Bottle</span></td>
-        </tr>
-      </table>
-    </div>
     <!-- MAIN-SCREEN GAME  -->
-    <div id="game-screen" class="d-none" >
-      <canvas id="canvas" width="720" height="480"></canvas>
-      <div id="full-screen"><i class="fa-solid fa-expand" onclick="toggleFullscreen()"></i></div>
+    <div id="content">
+      <div id="layer" class="d-none"></div>
+      <img id="start-img" class="" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+      <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
+      <!-- CONTROLS  -->
+      <div id="control-screen">
+        <div id="close-controls" class="game-buttons" onclick="hideControls()"><i class="fa-solid fa-xmark"></i></div>
+        <table>
+          <tr>
+            <td class="key"><i class="fa-solid fa-arrow-left"></i></td>
+            <td class="reaction"><span>Move Character Left</span></td>
+          </tr>
+          <tr>
+            <td class="key"><i class="fa-solid fa-arrow-right"></i></td>
+            <td class="reaction"><span>Move Character Right</span></td>
+          </tr>
+          <tr>
+            <td class="key"><b>SPACE</b></td>
+            <td class="reaction"><span>Let Character Jump</span></td>
+          </tr>
+          <tr>
+            <td class="key"><b>D</b></td>
+            <td class="reaction"><span>Throw A Bottle</span></td>
+          </tr>
+        </table>
+      </div>
+      <div id="game-buttons">
+        <div id="pause-game" class="game-buttons"><i class="fa-solid fa-pause"></i></div>
+        <div id="quick-controls" class="game-buttons"><i class="fa-solid fa-gamepad" onclick="showControls()"></i></div>
+        <div id="full-screen" class="game-buttons"><i class="fa-solid fa-expand" onclick="toggleFullscreen()"></i></div>
+      </div>
     </div>
-    <div id="end-screen" class="d-none" >
+    <div id="main-buttons">
+      <div class="main-buttons">
+        <button id="start-game" onclick="startGame()">Start Game</button>
+        <button id="main-controls" onclick="showControls()">Controls</button>
+      </div>
+      <!-- <button id="back" class="d-none" onclick="goBack()">Back</button> -->
     </div>
-  </div>
-  <div id="game-buttons">
-    <div class="main-buttons">
-      <button id="start-game" onclick="startGame()">Start Game</button>
-      <button id="controls" onclick="showControls()">Controls</button>
-    </div>
-    <button id="back" class="d-none" onclick="goBack()">Back</button>
-  </div>
 
   <div id="footline">
     <a href="https://www.freepik.com/free-vector/empty-desert-forest-landscape-sunset-time-scene_15951483.htm#query=desert%20cartoon&position=15&from_view=search&track=sph">Image by brgfx </a><span>on Freepik</span>

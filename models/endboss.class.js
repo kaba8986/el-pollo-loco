@@ -96,12 +96,4 @@ class Endboss extends MovableObject {
     }, 150)
   }
 
-  /*
-  startWalking() {
-          if(this.distanceTo(world.character)) {
-            console.log(this.distanceTo(world.character));
-            this.moveLeft();
-          }     
-  }
-  */
 }
