@@ -7,6 +7,7 @@ function startGame() {
     document.getElementById('start-img').classList.add('d-none');
     document.getElementById('main-buttons').style.display = 'none';
     document.getElementById('game-buttons').style.display = 'flex';
+    document.getElementById('mobile-buttons').style.display = 'flex';
     document.getElementById('canvas').classList.remove('d-none');
 }
 

@@ -33,6 +33,16 @@
 <body>
     <!-- MAIN-SCREEN GAME  -->
     <div id="content">
+      <div id="main-buttons">
+        <div class="main-buttons">
+          <button id="start-game" onclick="startGame()">Start Game</button>
+          <button id="main-controls" onclick="showControls()">Controls</button>
+        </div>
+        <!-- <button id="back" class="d-none" onclick="goBack()">Back</button> -->
+      </div>
+      <div id="footline">
+        <a href="https://www.freepik.com/free-vector/empty-desert-forest-landscape-sunset-time-scene_15951483.htm#query=desert%20cartoon&position=15&from_view=search&track=sph">Image by brgfx </a><span>on Freepik</span>
+      </div>
       <div id="layer" class="d-none"></div>
       <img id="start-img" class="" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
       <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
@@ -63,18 +73,19 @@
         <div id="quick-controls" class="game-buttons"><i class="fa-solid fa-gamepad" onclick="showControls()"></i></div>
         <div id="full-screen" class="game-buttons"><i class="fa-solid fa-expand" onclick="toggleFullscreen()"></i></div>
       </div>
-    </div>
-    <div id="main-buttons">
-      <div class="main-buttons">
-        <button id="start-game" onclick="startGame()">Start Game</button>
-        <button id="main-controls" onclick="showControls()">Controls</button>
+      <div id="mobile-buttons">
+        <div id="mobile-walk-buttons">
+          <div id="mobile-left" class="game-buttons"><i class="fa-solid fa-chevron-left"></i></div>
+          <div id="mobile-right" class="game-buttons"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div id="mobile-action-buttons">
+          <div id="mobile-jump" class="game-buttons"><i class="fa-solid fa-chevron-up"></i></div>
+          <div id="mobile-throw" class="game-buttons"><i class="fa-solid fa-crosshairs"></i></div>
+        </div>
       </div>
-      <!-- <button id="back" class="d-none" onclick="goBack()">Back</button> -->
     </div>
 
-  <div id="footline">
-    <a href="https://www.freepik.com/free-vector/empty-desert-forest-landscape-sunset-time-scene_15951483.htm#query=desert%20cartoon&position=15&from_view=search&track=sph">Image by brgfx </a><span>on Freepik</span>
-  </div>
+
 
   <!-- <img src="img\2_character_pepe\2_walk\W-21.png" width="50px" height="150px"> -->
 </body>
