@@ -95,7 +95,7 @@ class Character extends MovableObject {
 
     
     setStoppableInterval(() => {
-      console.log(this.x);
+      console.log('character');
     }, 1000);
 
 

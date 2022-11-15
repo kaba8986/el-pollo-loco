@@ -45,6 +45,12 @@ class Chicken extends MovableObject {
       }
     }, 1000 / 60);
 
+    /*
+    setStoppableInterval(() => {
+      console.log('chicken');
+    }, 1000);
+    */
+
 
     //Bilder wechseln
     setInterval(() => {
