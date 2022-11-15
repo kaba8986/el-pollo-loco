@@ -8,6 +8,7 @@ class World {
   bottleCounter = 5;
   shootable = true;
   level = level1;
+  endboss = this.level.enemies[this.level.enemies.length-1];
   canvas;
   ctx;
   keyboard;

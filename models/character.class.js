@@ -69,21 +69,21 @@ class Character extends MovableObject {
 
   animate() {
 
-    setInterval(() => {
+    setStoppableInterval(() => {
       world.pauseSound(this.walking_sound); 
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+      if (this.world.keyboard.RIGHT && this.distanceTo(world.endboss) < 50 && !this.isDead()) {
         this.moveRight();
         world.playSound(this.walking_sound, 0.5);
       }
 
-      if (this.world.keyboard.LEFT && this.x > 0) {
+      if (this.world.keyboard.LEFT && this.x > 0 && !this.isDead()) {
         this.moveLeft();
         this.otherDirection = true;
         world.playSound(this.walking_sound, 0.5);
       }
 
 
-      if(this.world.keyboard.SPACE && !this.isAboveGround()) {
+      if(this.world.keyboard.SPACE && !this.isAboveGround() && !this.isDead()) {
         this.jump();
         world.playSound(this.jump_sound, 0.5);
       }
@@ -93,13 +93,19 @@ class Character extends MovableObject {
 
     }, 1000 / 60);
 
+    
+    setStoppableInterval(() => {
+      console.log(this.x);
+    }, 1000);
 
-    setInterval(() => {
+
+    setStoppableInterval(() => {
 
 
       if(this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
-        this.dieCharacter();
+        intervalIds.forEach(clearInterval);
+        // this.dieCharacter();
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
         world.playSound(this.hurt_sound, 0.7);

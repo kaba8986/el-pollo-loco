@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let intervalIds = [];
 
 
 // function init() {
@@ -11,6 +12,10 @@ let keyboard = new Keyboard();
 
 // this.mobileBtnPressEvents();
 
+function setStoppableInterval(fn, time) {
+  let id = setInterval(fn, time);
+  intervalIds.push(id);
+}
  
 window.addEventListener('keydown', (event) => {
   if(event.keyCode == 32) {
