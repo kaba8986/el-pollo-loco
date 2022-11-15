@@ -1,4 +1,5 @@
-let muted = false;
+let mutedSounds = false;
+let mutedMusic = false;
 
 
 function startGame() {
@@ -36,14 +37,25 @@ function toggleFullscreen() {
 }
 
 
-function mutePage() {
-  if(muted) {
-    muted = false;
+function muteSounds() {
+  if(mutedSounds) {
+    mutedSounds = false;
   } else {
-    muted = true;
+    mutedSounds = true;
   }
-  document.getElementById('mute-btn').classList.toggle('fa-volume-off');
-  document.getElementById('mute-btn').classList.toggle('fa-volume-xmark');
+  document.getElementById('mute-sounds').classList.toggle('fa-volume-low');
+  document.getElementById('mute-sounds').classList.toggle('fa-volume-xmark');
 }
 
+
+function muteMusic() {
+  if(mutedMusic) {
+    mutedMusic = false;
+  } else {
+    mutedMusic = true;
+  }
+  document.getElementById('slash').classList.toggle('d-none');
+  document.getElementById('slash').classList.toggle('fa-solid');
+  document.getElementById('slash').classList.toggle('fa-slash');
+}
 

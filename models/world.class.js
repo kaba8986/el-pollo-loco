@@ -148,7 +148,7 @@ class World {
 
 
   checkMute() {
-    if(muted) {
+    if(mutedMusic) {
       this.levelMusic.pause();
     } else {
       this.levelMusic.play();
@@ -156,7 +156,7 @@ class World {
   }
 
   playSound(sound, volume) {
-    if(!muted) {
+    if(!mutedSounds) {
       sound.play();
       sound.volume = volume;
     } else {
