@@ -48,7 +48,7 @@ class ChickenSmall extends MovableObject {
         //Bilder wechseln
         setInterval(() => {
           if(this.isDead() && !this.played) {
-            world.playSound(this.kill_sound, 0.5);
+            world.playSound(this.kill_sound, 0.3);
             this.playAnimation(this.IMAGES_DEAD);
             setTimeout(() => {
               this.played = true;

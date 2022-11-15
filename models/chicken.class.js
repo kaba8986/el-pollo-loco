@@ -4,7 +4,7 @@ class Chicken extends MovableObject {
   height = 60;
   width = 80;
   energy = 25;
-  kill_sound = new Audio('./audio/chicken_kill.mp3');
+  kill_sound = new Audio('./audio/chicken.mp3');
   played = false;
   
   offset = {
