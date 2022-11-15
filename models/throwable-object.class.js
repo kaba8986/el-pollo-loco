@@ -42,7 +42,7 @@ class ThrowableObject extends MovableObject {
   }
 
   throw() {
-    this.throwing_sound.play();
+    world.playSound(this.throwing_sound, 0.4);
     this.speedY = 20; 
     if(!this.splashed) {
       this.applyGravity();
@@ -68,7 +68,7 @@ class ThrowableObject extends MovableObject {
           this.height = 0;
           this.loadImage('./img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png');
         } else {
-          this.splash_sound.play();
+          world.playSound(this.splash_sound, 1);
           this.playAnimation(this.IMAGES_SPLASH); 
           this.splashed = true; //plays splash-imgs only once 
         }

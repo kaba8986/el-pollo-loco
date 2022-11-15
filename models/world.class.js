@@ -70,7 +70,7 @@ class World {
       if (this.character.isColliding(coin) && coin.width != 0 && coin.height != 0) {
         this.collectCoin(coin);
         this.statusBarCoin.setPercentage(this.coinCounter);
-        this.coinSound.play();
+        this.playSound(this.coinSound, 0.5);
       }
     })
   }
@@ -91,7 +91,7 @@ class World {
       if (this.character.isColliding(bottle) && bottle.width != 0 && bottle.height != 0) {
         this.collectBottle(bottle);
         this.statusBarBottle.setPercentage(this.bottleCounter);
-        this.bottleSound.play();
+        this.playSound(this.bottleSound, 0.5);
       }
     })
   }
@@ -137,6 +137,20 @@ class World {
         this.shootable = false;
       }
     }
+  }
+
+  playSound(sound, volume) {
+    if(!muted) {
+      sound.play();
+      sound.volume = volume;
+    } else {
+      this.pauseSound(sound);
+    }
+  }
+
+  pauseSound(sound) {
+    sound.pause();
+    sound.volume = 0;
   }
 
 

@@ -106,7 +106,7 @@ body {
   position: absolute;
   top: 0px;
   right: 0;
-  width: 210px;
+  height: 60px;
   padding: 10px 15px;
   display: none;
   justify-content: right;
@@ -118,6 +118,7 @@ body {
 
 
 .game-buttons {
+  line-height: 100%;
   padding: 3px 10px;
   background: rgb(187, 106, 0);
   color: rgb(255, 234, 208);
@@ -126,6 +127,7 @@ body {
   font-size: 24px;
   cursor: pointer;
 }
+
 
 #mobile-buttons {
   position: absolute;

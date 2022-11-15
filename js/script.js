@@ -1,4 +1,4 @@
-
+let muted = false;
 
 
 function startGame() {
@@ -34,3 +34,16 @@ function toggleFullscreen() {
   else if(canvas.mozRequestFullScreen)
       canvas.mozRequestFullScreen();
 }
+
+
+function mutePage() {
+  if(muted) {
+    muted = false;
+  } else {
+    muted = true;
+  }
+  document.getElementById('mute-btn').classList.toggle('fa-volume-off');
+  document.getElementById('mute-btn').classList.toggle('fa-volume-xmark');
+}
+
+

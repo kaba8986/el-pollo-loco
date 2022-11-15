@@ -49,7 +49,7 @@ class Chicken extends MovableObject {
     //Bilder wechseln
     setInterval(() => {
       if(this.isDead() && !this.played) {
-        this.kill_sound.play();
+        world.playSound(this.kill_sound, 0.5);
         this.playAnimation(this.IMAGES_DEAD);
         setTimeout(() => {
           this.width = 0;
