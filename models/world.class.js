@@ -15,6 +15,8 @@ class World {
 
   coinSound = new Audio('./audio/coin.mp3');
   bottleSound = new Audio('./audio/bottle.mp3');
+  levelMusic = new Audio('./audio/level_music.mp3');
+
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -36,11 +38,16 @@ class World {
       this.checkBottleHarvest();
       this.checkCollisionBottle();
       this.checkThrowObjects();
+      this.checkMute();
     }, 200);
+
 
     setInterval(() => {
       this.checkJumpOnEnemy();
     },  50);
+
+    this.levelMusic.loop = true;
+    this.playSound(this.levelMusic, 0.6);
   }
 
 
@@ -136,6 +143,15 @@ class World {
         this.throwableObjects.push(bottle);
         this.shootable = false;
       }
+    }
+  }
+
+
+  checkMute() {
+    if(muted) {
+      this.levelMusic.pause();
+    } else {
+      this.levelMusic.play();
     }
   }
 
