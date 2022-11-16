@@ -30,7 +30,7 @@ class Chicken extends MovableObject {
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEAD);
 
-    this.x = 300 + Math.random() * 2000; 
+    this.x = 400 + Math.random() * 3800; 
     this.speed = 0.15 + Math.random()*1.2;
 
     this.animate();
@@ -50,6 +50,8 @@ class Chicken extends MovableObject {
       console.log('chicken');
     }, 1000);
     */
+
+    
 
 
     //Bilder wechseln

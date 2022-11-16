@@ -4,19 +4,15 @@ let keyboard = new Keyboard();
 let intervalIds = [];
 
 
-// function init() {
-//   canvas = document.getElementById('canvas');
-//   world = new World(canvas, keyboard);
-//     console.log('my character is ', world.character)
-// }
 
-// this.mobileBtnPressEvents();
 
 function setStoppableInterval(fn, time) {
   let id = setInterval(fn, time);
   intervalIds.push(id);
 }
- 
+
+
+
 window.addEventListener('keydown', (event) => {
   if(event.keyCode == 32) {
     keyboard.SPACE = true;
@@ -87,12 +83,12 @@ function setMobileBtnControl() {
     keyboard.RIGHT = false;
   });
 
-  document.getElementById('mobile-up').addEventListener('touchstart', (e) => {
+  document.getElementById('mobile-jump').addEventListener('touchstart', (e) => {
     e.preventDefault();
     keyboard.SPACE = true;
   });
 
-  document.getElementById('mobile-up').addEventListener('touchend', (e) => {
+  document.getElementById('mobile-jump').addEventListener('touchend', (e) => {
     keyboard.SPACE = false;
   });
 
@@ -106,3 +102,4 @@ function setMobileBtnControl() {
   });
 
 }
+

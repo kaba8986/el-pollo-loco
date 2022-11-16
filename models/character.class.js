@@ -89,14 +89,10 @@ class Character extends MovableObject {
       }
 
       this.world.camera_x = -this.x + 100;
-
+      console.log(this.x);
 
     }, 1000 / 60);
 
-    
-    setStoppableInterval(() => {
-      console.log('character');
-    }, 1000);
 
 
     setStoppableInterval(() => {
@@ -105,7 +101,7 @@ class Character extends MovableObject {
       if(this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
         intervalIds.forEach(clearInterval);
-        // this.dieCharacter();
+        this.dieCharacter();
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
         world.playSound(this.hurt_sound, 0.7);

@@ -48,7 +48,7 @@ class World {
     },  50);
 
     this.levelMusic.loop = true;
-    this.playSound(this.levelMusic, 0.6);
+    this.playSound(this.levelMusic, 0.5);
   }
 
 

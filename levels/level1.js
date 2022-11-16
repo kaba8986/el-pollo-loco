@@ -4,6 +4,14 @@ let level1 = new Level(
       new Chicken(),
       new Chicken(),
       new Chicken(),
+      new Chicken(),
+      new Chicken(),
+      new Chicken(),
+      new Chicken(),
+      new ChickenSmall(),
+      new ChickenSmall(),
+      new ChickenSmall(),
+      new ChickenSmall(),
       new ChickenSmall(),
       new ChickenSmall(),
       new ChickenSmall(),
@@ -56,19 +64,33 @@ let level1 = new Level(
     ],
 
     [
-      new Coin(),
-      new Coin(),
-      new Coin(),
-      new Coin(),
-      new Coin()
+      new Coin(500, 190),
+      new Coin(500, 250),
+      new Coin(1200, 130),
+      new Coin(1260, 130), 
+      new Coin(1320, 130), 
+      new Coin(1800, 280), 
+      new Coin(1860, 280), 
+      new Coin(2200, 150), 
+      new Coin(2600, 300), 
+      new Coin(2660, 300), 
+      new Coin(2720, 300),
+      new Coin(3400, 300),
+      new Coin(3460, 240),
+      new Coin(3520, 180),
+      new Coin(3580, 180),     
+      new Coin(3640, 240),   
+      new Coin(3700, 300)                     
     ],
 
     [
-      new Bottle(),
-      new Bottle(),
-      new Bottle(),
-      new Bottle(),
-      new Bottle()
+      new Bottle(1100, 370, 0),
+      new Bottle(1130, 370, 1),
+      new Bottle(1600, 370, 0),
+      new Bottle(2360, 370, 0),
+      new Bottle(2390, 370, 1),
+      new Bottle(2450, 370, 0),
+      new Bottle(3100, 370, 0),
     ]
   )
 

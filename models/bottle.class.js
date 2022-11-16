@@ -15,17 +15,28 @@ class Bottle extends MovableObject {
         './img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ];
 
-    constructor() {
-        super().loadImage(this.randomizeDirection());
+    constructor(x,y, dir) {
+        super().loadImage(this.setDirection(dir));
 
+        this.x = x;
+        this.y = y;
+
+        /*  
+        super().loadImage(this.randomizeDirection());
+        
         this.y = 370;
         this.x = 200 + Math.random()*1800;
         //this.distanceToNext();
+        */
     }
 
     randomizeDirection() {
         let random = Math.round(Math.random());
         return this.IMAGES[random];
+    }
+
+    setDirection(dir) {
+        return dir == 0 ? this.IMAGES[0] : this.IMAGES[1];
     }
 
 
