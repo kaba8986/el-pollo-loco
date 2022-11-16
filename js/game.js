@@ -1,13 +1,6 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-intervalIds = [];
-
-
-function setStoppableInterval(fn, time) {
-  let id = setInterval(fn, time);
-  intervalIds.push(id);
-}
 
 
 window.addEventListener('keydown', (event) => {

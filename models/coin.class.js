@@ -31,7 +31,9 @@ class Coin extends MovableObject {
 
     animate() {
         setStoppableInterval(() => {
-            this.playAnimation(this.IMAGES);
+            if(!paused) {
+                this.playAnimation(this.IMAGES);
+            }
         }, 400)
     }
 

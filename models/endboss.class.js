@@ -75,6 +75,7 @@ class Endboss extends MovableObject {
     //Bilder wechseln
     let dead = false;
     setStoppableInterval(() => {
+      if(!paused) {
         if(this.isHurt()) {
           this.playAnimation(this.IMAGES_HURT);
         } else if (this.energy <= 75 && this.distanceTo(world.character) > 0) {
@@ -92,22 +93,18 @@ class Endboss extends MovableObject {
         } else {
           this.playAnimation(this.IMAGES_ALERT);  
         }
-
-        //this.playEndbossMusic();
-
-
-    }, 150)
-
-
-    
+      }
+      // console.log(this.distanceTo(world.character));
+    }, 150) 
   }
 
 
-  
+  /*
   playEndbossMusic() {
     if(this.distanceTo(world.character) < 900) {
       this.endboss_music.play();
     }
   }
+  */
 
 }

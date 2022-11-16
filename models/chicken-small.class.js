@@ -37,26 +37,29 @@ class ChickenSmall extends MovableObject {
 
 
     animate() {
-        //Hühner laufen
-    
+        //Move Chicken
         setStoppableInterval(()=> {
-          if(!this.isDead()) {
-            this.moveLeft();
+          if(!paused) {
+            if(!this.isDead()) {
+              this.moveLeft();
+            }
           }
         }, 1000 / 60);
     
-        //Bilder wechseln
+        //Show images
         setStoppableInterval(() => {
-          if(this.isDead() && !this.played) {
-            world.playSound(this.kill_sound, 0.3);
-            this.playAnimation(this.IMAGES_DEAD);
-            setTimeout(() => {
-              this.played = true;
-              this.width = 0;
-              this.height = 0;
-            }, 1500);
-          } else {
-            this.playAnimation(this.IMAGES_WALKING);
+          if(!paused) {
+            if(this.isDead() && !this.played) {
+              world.playSound(this.kill_sound, 0.3);
+              this.playAnimation(this.IMAGES_DEAD);
+              setTimeout(() => {
+                this.played = true;
+                this.width = 0;
+                this.height = 0;
+              }, 1500);
+            } else {
+              this.playAnimation(this.IMAGES_WALKING);
+            }
           }
         }, 100)
       }

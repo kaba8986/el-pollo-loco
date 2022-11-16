@@ -130,9 +130,4 @@ class MovableObject extends DrawableObject {
     return this.x -  obj.x;
   }
 
-  setStoppableInterval(fn, time) {
-    let id = setInterval(fn, time);
-    intervalIds.push(id);
-  }
-
 }

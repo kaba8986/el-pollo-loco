@@ -71,9 +71,12 @@
       <div id="game-buttons">
         <div id="mute-music-button" class="game-buttons" onclick="muteMusic()"><i id="mute-music" class="fa-solid fa-music"></i><i id="slash" class="d-none"></i></div>
         <div><i id="mute-sounds" class="fa-solid fa-volume-low game-buttons" onclick="muteSounds()"></i></div>
-        <div id="pause-game" class="game-buttons"><i class="fa-solid fa-pause"></i></div>
+        <div><i id="pause-game" class="fa-solid fa-pause game-buttons" onclick="pauseGame()"></i></div>
         <div id="quick-controls" class="game-buttons"><i class="fa-solid fa-gamepad" onclick="showControls()"></i></div>
         <div id="full-screen" class="game-buttons"><i class="fa-solid fa-expand" onclick="toggleFullscreen()"></i></div>
+      </div>
+      <div id="total-points">
+        <span id="point-counter"></span>
       </div>
       <div id="mobile-buttons">
         <div id="mobile-walk-buttons">

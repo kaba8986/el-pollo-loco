@@ -13,11 +13,12 @@ class World {
   ctx;
   keyboard;
   camera_x = 0;
+  gameover = false;
 
   coinSound = new Audio('./audio/coin.mp3');
   bottleSound = new Audio('./audio/bottle.mp3');
   levelMusic = new Audio('./audio/level_music.mp3');
-  endboss_music = new Audio('./audio/endboss.mp3');
+  endbossMusic = new Audio('./audio/endboss.mp3');
 
 
   constructor(canvas, keyboard) {
@@ -34,7 +35,7 @@ class World {
   }
 
   run() {
-    setInterval(() => {
+    setStoppableInterval(() => {
       this.checkCollisions();
       this.checkCoinHarvest();
       this.checkBottleHarvest();
@@ -43,6 +44,7 @@ class World {
       this.fadeInMusic();
       this.fadeOutMusic();
       this.checkMute();
+      this.checkPaused();
     }, 200);
 
 
@@ -180,9 +182,10 @@ class World {
    */
   checkMute() {
     if (mutedMusic) {
-      this.levelMusic.pause();
+      this.pauseSound(this.levelMusic);
     } else {
-      this.levelMusic.play();
+      this.playSound(this.levelMusic, 1);
+      this.fadeInMusic();
     }
   }
 
@@ -208,7 +211,7 @@ class World {
    */
   pauseSound(sound) {
     sound.pause();
-    sound.volume = 0;
+    // sound.volume = 0;
   }
 
 
@@ -218,16 +221,19 @@ class World {
   fadeInMusic() {
     setInterval(() => {
       let dis = this.endboss.distanceTo(this.character);
-      if (mutedMusic) {
-        this.endboss_music.volume = 0;
+      if (mutedMusic || this.gameover || dis > 1200) {
+        this.endbossMusic.volume = 0;
       } else {
         if (dis < 1200 && dis > 500) {
-          this.endboss_music.play();
+          this.endbossMusic.play();
           let vol = (1200 - dis) / 700;
-          this.endboss_music.volume = vol;
+          this.endbossMusic.volume = vol;
+        } else if (dis < 500) {
+          this.endbossMusic.play();
+          this.endbossMusic.volume = 1;
         }
       }
-    }, 1000);
+    }, 200);
   }
 
 
@@ -240,8 +246,20 @@ class World {
       if (dis < 1500 && dis > 800) {
         let vol = 1 - (1500 - dis) / 700;
         this.levelMusic.volume = vol;
+      } else if (dis < 800) {
+        this.levelMusic.volume = 0;
       }
-    }, 1000);
+    }, 200);
+  }
+
+
+  checkPaused() {
+    if(paused) {
+
+
+    } else {
+
+    }
   }
 
 
@@ -335,6 +353,17 @@ class World {
     //X-Koordinate wird wieder negiert
     mo.x = mo.x * -1;
     this.ctx.restore();
+  }
+
+
+  stopGame() {   
+    if(!this.gameover) {
+      this.playSound(this.character.die_sound, 0.4);
+    }
+    this.gameover = true;
+    intervalIds.forEach(clearInterval);
+    this.pauseSound(this.levelMusic);
+    this.pauseSound(this.endbossMusic);
   }
 }
 

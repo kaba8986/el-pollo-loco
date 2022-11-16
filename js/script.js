@@ -1,7 +1,9 @@
 let mutedSounds = false;
 let mutedMusic = false;
 let mutedEndboss = false;
+let paused = false;
 intervalIds = [];
+
 
 
 function setStoppableInterval(fn, time) {
@@ -22,8 +24,8 @@ function startGame() {
 }
 
 
-function stopGame() {
-  intervalIds.forEach(clearInterval);
+function showEndscreen() {
+
 }
 
 
@@ -72,5 +74,17 @@ function muteMusic() {
   document.getElementById('slash').classList.toggle('d-none');
   document.getElementById('slash').classList.toggle('fa-solid');
   document.getElementById('slash').classList.toggle('fa-slash');
+  
+}
+
+
+function pauseGame() {
+  if(paused) {
+    paused = false;
+  } else {
+    paused = true;
+  }
+  document.getElementById('pause-game').classList.toggle('fa-pause');
+  document.getElementById('pause-game').classList.toggle('fa-play');
 }
 
