@@ -1,5 +1,6 @@
 let mutedSounds = false;
 let mutedMusic = false;
+let mutedEndboss = false;
 
 
 function startGame() {
@@ -51,8 +52,10 @@ function muteSounds() {
 function muteMusic() {
   if(mutedMusic) {
     mutedMusic = false;
+    mutedEndboss = false;
   } else {
     mutedMusic = true;
+    mutedEndboss = true;
   }
   document.getElementById('slash').classList.toggle('d-none');
   document.getElementById('slash').classList.toggle('fa-solid');

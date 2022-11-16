@@ -8,7 +8,7 @@ class World {
   bottleCounter = 5;
   shootable = true;
   level = level1;
-  endboss = this.level.enemies[this.level.enemies.length-1];
+  endboss = this.level.enemies[this.level.enemies.length - 1];
   canvas;
   ctx;
   keyboard;
@@ -48,23 +48,29 @@ class World {
 
     setInterval(() => {
       this.checkJumpOnEnemy();
-    },  50);
+    }, 50);
 
     this.levelMusic.loop = true;
     this.playSound(this.levelMusic, 1);
   }
 
 
-  //Collision with Enemy
+  /**
+   * Check if character collides with enemy - if yes, execute hit-function and set new bar-image
+   */
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.energy) {
-        this.character.hit(); 
+        this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
     });
   }
 
+
+  /**
+   * Check if character jumps on enemy - if yes, character kills enemy
+   */
   checkJumpOnEnemy() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof ChickenSmall)) {
@@ -74,8 +80,10 @@ class World {
   }
 
 
-  
-  //Harvesting Coins
+
+  /**
+   * Check collision with coins - if yes, play sound and execute collecting-function
+   */
   checkCoinHarvest() {
     this.level.coins.forEach((coin) => {
       if (this.character.isColliding(coin) && coin.width != 0 && coin.height != 0) {
@@ -87,6 +95,10 @@ class World {
   }
 
 
+  /**
+   * Collecting Coins - Adding to counter and resize them to null
+   * @param {Coin} bottle 
+   */
   collectCoin(coin) {
     if (this.coinCounter < 5) {
       this.coinCounter++;
@@ -96,7 +108,9 @@ class World {
   }
 
 
-  //Harvesting Bottles
+  /**
+   * Check collision with collectable bottles - if yes, play sound and execute collecting-function
+   */
   checkBottleHarvest() {
     this.level.bottles.forEach((bottle) => {
       if (this.character.isColliding(bottle) && bottle.width != 0 && bottle.height != 0) {
@@ -108,6 +122,10 @@ class World {
   }
 
 
+  /**
+   * Collecting Bottles - Adding to counter and resize them to null
+   * @param {Bottle} bottle 
+   */
   collectBottle(bottle) {
     if (this.bottleCounter < 5) {
       this.bottleCounter++;
@@ -117,28 +135,17 @@ class World {
   }
 
 
-  checkCollisionBottle() {
-    this.level.enemies.forEach((enemy) => {
-      this.throwableObjects.forEach((bottle) => {
-        if(bottle.isColliding(enemy) && !bottle.splashed) {
-          enemy.energy -= 25;
-          enemy.hit();
-          bottle.enemyHit = true;
-          // bottle.splashed = true;
-        }
-      })
-    })
-  }
-
-
+  /**
+   * Creates throwable Bottles and put in array
+   */
   checkThrowObjects() {
     if (this.keyboard.D && this.bottleCounter) {
       setTimeout(() => {
         this.shootable = true;
       }, 500);
-      if(this.shootable) {
+      if (this.shootable) {
         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-        if(this.character.otherDirection) {
+        if (this.character.otherDirection) {
           bottle.speedX *= -1;
           bottle.x = this.character.x;
         }
@@ -151,16 +158,42 @@ class World {
   }
 
 
+  /**
+ * Check if throwed bottle hits enemy
+ */
+  checkCollisionBottle() {
+    this.level.enemies.forEach((enemy) => {
+      this.throwableObjects.forEach((bottle) => {
+        if (bottle.isColliding(enemy) && !bottle.splashed) {
+          enemy.energy -= 25;
+          enemy.hit();
+          bottle.enemyHit = true;
+          // bottle.splashed = true;
+        }
+      })
+    })
+  }
+
+
+  /**
+   * Check if sound is muted
+   */
   checkMute() {
-    if(mutedMusic) {
+    if (mutedMusic) {
       this.levelMusic.pause();
     } else {
       this.levelMusic.play();
     }
   }
 
+
+  /**
+   * Play audio-file by given volume
+   * @param {Audio} sound 
+   * @param {number} volume 
+   */
   playSound(sound, volume) {
-    if(!mutedSounds) {
+    if (!mutedSounds) {
       sound.play();
       sound.volume = volume;
     } else {
@@ -168,40 +201,55 @@ class World {
     }
   }
 
+
+  /**
+   * Pause audio-file
+   * @param {Audio} sound 
+   */
   pauseSound(sound) {
     sound.pause();
     sound.volume = 0;
   }
 
 
+  /**
+   * Fade in Boss-Music by checking distance to character
+   */
   fadeInMusic() {
     setInterval(() => {
       let dis = this.endboss.distanceTo(this.character);
-      if(dis < 1200 && dis > 500) {
-        this.endboss_music.play();
-        let vol = (1200-dis)/700;
-        this.endboss_music.volume = vol;
-      } 
+      if (mutedMusic) {
+        this.endboss_music.volume = 0;
+      } else {
+        if (dis < 1200 && dis > 500) {
+          this.endboss_music.play();
+          let vol = (1200 - dis) / 700;
+          this.endboss_music.volume = vol;
+        }
+      }
     }, 1000);
   }
 
 
+  /**
+   * Fade out level Music by checking distance to character
+   */
   fadeOutMusic() {
     setInterval(() => {
       let dis = this.endboss.distanceTo(this.character);
-      if(dis < 1500 && dis > 800) {
-        let vol = 1- (1500-dis)/700;
+      if (dis < 1500 && dis > 800) {
+        let vol = 1 - (1500 - dis) / 700;
         this.levelMusic.volume = vol;
-      } 
+      }
     }, 1000);
   }
 
 
-
+  /**
+   * Drawing elements on canvas-context
+   */
   draw() {
-
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.ctx.translate(this.camera_x, 0);
 
     //Background Elements
@@ -235,12 +283,22 @@ class World {
     });
   }
 
+
+  /**
+   * Addin Images from array to canvas-context
+   * @param {array} objects 
+   */
   addObjectsToMap(objects) {
     objects.forEach(o => {
       this.addToMap(o);
     })
   }
 
+
+  /**
+   * Adding Image of Movable Object to canvas-context
+   * @param {Movable Object} mo 
+   */
   addToMap(mo) {
     //Bilder spiegeln wenn Character nach links läuft
     if (mo.otherDirection) {
@@ -251,13 +309,15 @@ class World {
     // mo.drawFrame(this.ctx);
     // mo.drawBorder(this.ctx);
 
-
-    //Bilder spiegeln wenn Character nach links läuft
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
   }
 
+  /**
+   * Mirrors images of movable Object
+   * @param {Movable Object} mo 
+   */
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
@@ -266,6 +326,11 @@ class World {
     mo.x = mo.x * -1;
   }
 
+
+  /**
+   * Mirrors images back
+   * @param {Movable Object} mo 
+   */
   flipImageBack(mo) {
     //X-Koordinate wird wieder negiert
     mo.x = mo.x * -1;
