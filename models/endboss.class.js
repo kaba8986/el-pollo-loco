@@ -74,7 +74,7 @@ class Endboss extends MovableObject {
   animate() {
     //Bilder wechseln
     let dead = false;
-    setInterval(() => {
+    setStoppableInterval(() => {
         if(this.isHurt()) {
           this.playAnimation(this.IMAGES_HURT);
         } else if (this.energy <= 75 && this.distanceTo(world.character) > 0) {

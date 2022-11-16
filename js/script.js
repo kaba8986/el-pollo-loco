@@ -1,6 +1,13 @@
 let mutedSounds = false;
 let mutedMusic = false;
 let mutedEndboss = false;
+intervalIds = [];
+
+
+function setStoppableInterval(fn, time) {
+  let id = setInterval(fn, time);
+  intervalIds.push(id);
+}
 
 
 function startGame() {
@@ -12,6 +19,11 @@ function startGame() {
     document.getElementById('mobile-buttons').style.display = 'flex';
     document.getElementById('canvas').classList.remove('d-none');
     setMobileBtnControl();
+}
+
+
+function stopGame() {
+  intervalIds.forEach(clearInterval);
 }
 
 

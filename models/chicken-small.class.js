@@ -39,14 +39,14 @@ class ChickenSmall extends MovableObject {
     animate() {
         //Hühner laufen
     
-        setInterval(()=> {
+        setStoppableInterval(()=> {
           if(!this.isDead()) {
             this.moveLeft();
           }
         }, 1000 / 60);
     
         //Bilder wechseln
-        setInterval(() => {
+        setStoppableInterval(() => {
           if(this.isDead() && !this.played) {
             world.playSound(this.kill_sound, 0.3);
             this.playAnimation(this.IMAGES_DEAD);

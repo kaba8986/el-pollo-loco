@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
   energy = 100;
   lastHit = 0;
 
+
   applyGravity() {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0 ) {
@@ -129,5 +130,9 @@ class MovableObject extends DrawableObject {
     return this.x -  obj.x;
   }
 
+  setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    intervalIds.push(id);
+  }
 
 }

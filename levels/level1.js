@@ -1,4 +1,3 @@
-let levelLength = 5;
 let level1 = new Level(
     [
       new Chicken(),
@@ -34,12 +33,12 @@ let level1 = new Level(
       new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', -719),
       new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', -719),
       new BackgroundObject('./img/5_background/layers/1_first_layer/2.png', -719),
-  
+
       new BackgroundObject('./img/5_background/layers/air.png', 0),
       new BackgroundObject('./img/5_background/layers/3_third_layer/1.png', 0),
       new BackgroundObject('./img/5_background/layers/2_second_layer/1.png', 0),
       new BackgroundObject('./img/5_background/layers/1_first_layer/1.png', 0),
-      
+
       new BackgroundObject('./img/5_background/layers/air.png', 719),
       new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', 719),
       new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', 719),
@@ -75,20 +74,20 @@ let level1 = new Level(
       new Coin(500, 190),
       new Coin(500, 250),
       new Coin(1200, 130),
-      new Coin(1260, 130), 
-      new Coin(1320, 130), 
-      new Coin(1800, 280), 
-      new Coin(1860, 280), 
-      new Coin(2200, 150), 
-      new Coin(2600, 300), 
-      new Coin(2660, 300), 
+      new Coin(1260, 130),
+      new Coin(1320, 130),
+      new Coin(1800, 280),
+      new Coin(1860, 280),
+      new Coin(2200, 150),
+      new Coin(2600, 300),
+      new Coin(2660, 300),
       new Coin(2720, 300),
       new Coin(3400, 300),
       new Coin(3460, 240),
       new Coin(3520, 180),
-      new Coin(3580, 180),     
-      new Coin(3640, 240),   
-      new Coin(3700, 300)                     
+      new Coin(3580, 180),
+      new Coin(3640, 240),
+      new Coin(3700, 300)
     ],
 
     [
@@ -102,14 +101,16 @@ let level1 = new Level(
     ]
   )
 
-  /*
-  this.addBackgroundObjects(this.levelLength);
 
-  function addBackgroundObjects(length) {
-    for(let i = 0; i < length; i++) {
-      let bg = new BackgroundObject('./img/5_background/layers/air.png', (i+1)*719);
-      this.level1[2].push(bg);
-    }
 
+/*
+this.addBackgroundObjects(this.levelLength);
+
+function addBackgroundObjects(length) {
+  for(let i = 0; i < length; i++) {
+    let bg = new BackgroundObject('./img/5_background/layers/air.png', (i+1)*719);
+    this.level1[2].push(bg);
   }
-  */
+
+}
+*/

@@ -99,8 +99,7 @@ class Character extends MovableObject {
 
       if(this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
-        intervalIds.forEach(clearInterval);
-        this.dieCharacter();
+        stopGame();
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
         world.playSound(this.hurt_sound, 0.7);
