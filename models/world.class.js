@@ -3,6 +3,7 @@ class World {
   statusBarHealth = new StatusBarHealth();
   statusBarCoin = new StatusBarCoin();
   statusBarBottle = new StatusBarBottle();
+  statusBarEndboss = new StatusBarEndboss();
   throwableObjects = [];
   coinCounter = 0;
   bottleCounter = 5;
@@ -14,6 +15,7 @@ class World {
   keyboard;
   camera_x = 0;
   gameover = false;
+  win = false;
   points = 0;
   addedPoints = 0;
 
@@ -180,7 +182,11 @@ class World {
           enemy.hit();
           bottle.enemyHit = true;
           this.getPoints(enemy);
+          console.log(enemy.energy);
           // bottle.splashed = true;
+          if(enemy instanceof Endboss) {
+            this.statusBarEndboss.setPercentage(enemy.energy);
+          }
         }
       })
     })
@@ -306,7 +312,8 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
     // ----- Space for fixed objects like statBar -----
     this.addToMap(this.statusBarHealth);
-    // this.addToMap(this.statusBarCoin);
+    this.addToMap(this.statusBarEndboss);
+    // this.addToMap(this.statusBarCoin); 
     this.addToMap(this.statusBarBottle);
     //Cam forward
     this.ctx.translate(this.camera_x, 0);
@@ -396,13 +403,20 @@ class World {
 
 
   stopGame() {   
-    if(!this.gameover) {
-      this.playSound(this.character.die_sound, 0.4);
-    }
-    this.gameover = true;
     intervalIds.forEach(clearInterval);
     this.pauseSound(this.levelMusic);
     this.pauseSound(this.endbossMusic);
+    if(!this.win) {
+      this.playSound(this.character.die_sound, 0.4);
+      this.gameover = true;
+      // this.looseGame();
+    } else if(this.win) {
+      setTimeout(() => {
+        this.endboss.dieCharacter();
+        this.playSound(this.endboss.falling, 0.4);
+      }, 1000);
+      //this.winGame();
+    }
   }
 }
 

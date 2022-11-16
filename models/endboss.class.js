@@ -4,7 +4,7 @@ class Endboss extends MovableObject {
   width = 250;
   y = 50;
   isWalking = false;
-  energy = 100;
+  energy = 125;
   speed = 25;
 
   offset = {
@@ -15,6 +15,7 @@ class Endboss extends MovableObject {
 }
 
   endboss_music = new Audio('./audio/endboss.mp3');
+  falling = new Audio('./audio/falling.mp3')
 
 
   IMAGES_WALKING = [
@@ -74,11 +75,11 @@ class Endboss extends MovableObject {
   animate() {
     //Bilder wechseln
     let dead = false;
-    setStoppableInterval(() => {
+    setInterval(() => {
       if(!paused) {
         if(this.isHurt()) {
           this.playAnimation(this.IMAGES_HURT);
-        } else if (this.energy <= 75 && this.distanceTo(world.character) > 0) {
+        } else if (this.energy <= 100 && this.distanceTo(world.character) > 0 && !this.isDead()) {
           this.playAnimation(this.IMAGES_WALKING);
           this.moveLeft();
         } else if(this.isDead() && !dead) {
@@ -86,24 +87,13 @@ class Endboss extends MovableObject {
           dead = true;
         } else if (dead) {
           this.img.src = './img/4_enemie_boss_chicken/5_dead/G27.png';
-          setTimeout(() => {
-            this.dieCharacter();
-          }, 1300);
+          world.win = true;
+          world.stopGame();
         } else {
           this.playAnimation(this.IMAGES_ALERT);  
         }
       }
-      // console.log(this.distanceTo(world.character));
     }, 150) 
   }
-
-
-  /*
-  playEndbossMusic() {
-    if(this.distanceTo(world.character) < 900) {
-      this.endboss_music.play();
-    }
-  }
-  */
 
 }
