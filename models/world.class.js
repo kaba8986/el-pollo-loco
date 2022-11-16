@@ -17,6 +17,7 @@ class World {
   coinSound = new Audio('./audio/coin.mp3');
   bottleSound = new Audio('./audio/bottle.mp3');
   levelMusic = new Audio('./audio/level_music.mp3');
+  endboss_music = new Audio('./audio/endboss.mp3');
 
 
   constructor(canvas, keyboard) {
@@ -39,6 +40,7 @@ class World {
       this.checkBottleHarvest();
       this.checkCollisionBottle();
       this.checkThrowObjects();
+      this.fadeOutMusic();
       this.checkMute();
     }, 200);
 
@@ -48,7 +50,7 @@ class World {
     },  50);
 
     this.levelMusic.loop = true;
-    this.playSound(this.levelMusic, 0.5);
+    this.playSound(this.levelMusic, 1);
   }
 
 
@@ -169,6 +171,33 @@ class World {
     sound.pause();
     sound.volume = 0;
   }
+
+
+  fadeInMusic() {
+    setInterval(() => {
+      let dis = this.endboss.distanceTo(this.character);
+      if(dis < 1000) {
+        this.endboss_music.play();
+      } 
+      let vol = (1000-dis)/800;
+      console.log(dis);
+      console.log(vol);
+    }, 1000);
+  }
+
+
+  fadeOutMusic() {
+    setInterval(() => {
+      let dis = this.endboss.distanceTo(this.character);
+      if(dis < 1500) {
+        let vol = 1- (1500-dis)/1000;
+        this.levelMusic.volume = vol;
+        console.log(dis);
+        console.log(vol);
+      } 
+    });
+  }
+
 
 
   draw() {

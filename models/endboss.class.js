@@ -14,6 +14,7 @@ class Endboss extends MovableObject {
     left: 20
 }
 
+  endboss_music = new Audio('./audio/endboss.mp3');
 
 
   IMAGES_WALKING = [
@@ -92,8 +93,21 @@ class Endboss extends MovableObject {
           this.playAnimation(this.IMAGES_ALERT);  
         }
 
-      // console.log(this.x - world.character.x);
+        //this.playEndbossMusic();
+
+
     }, 150)
+
+
+    
+  }
+
+
+  
+  playEndbossMusic() {
+    if(this.distanceTo(world.character) < 900) {
+      this.endboss_music.play();
+    }
   }
 
 }

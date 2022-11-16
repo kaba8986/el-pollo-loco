@@ -89,7 +89,6 @@ class Character extends MovableObject {
       }
 
       this.world.camera_x = -this.x + 100;
-      console.log(this.x);
 
     }, 1000 / 60);
 
