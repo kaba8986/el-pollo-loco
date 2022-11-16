@@ -224,11 +224,11 @@ class World {
       if (mutedMusic || this.gameover || dis > 1200) {
         this.endbossMusic.volume = 0;
       } else {
-        if (dis < 1200 && dis > 500) {
+        if (dis < 1200 && dis > 500 && !paused) {
           this.endbossMusic.play();
           let vol = (1200 - dis) / 700;
           this.endbossMusic.volume = vol;
-        } else if (dis < 500) {
+        } else if (dis < 500 && !paused) {
           this.endbossMusic.play();
           this.endbossMusic.volume = 1;
         }
@@ -255,10 +255,12 @@ class World {
 
   checkPaused() {
     if(paused) {
-
-
+      this.pauseSound(this.levelMusic);
+      this.pauseSound(this.endbossMusic);
     } else {
 
+      this.fadeOutMusic();
+      this.fadeInMusic();
     }
   }
 
