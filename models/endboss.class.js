@@ -81,7 +81,6 @@ class Endboss extends MovableObject {
         } else if (this.energy <= 75 && this.distanceTo(world.character) > 0) {
           this.playAnimation(this.IMAGES_WALKING);
           this.moveLeft();
-          console.log(this.distanceTo(world.character));
         } else if(this.isDead() && !dead) {
           this.playAnimation(this.IMAGES_DEAD);
           dead = true;

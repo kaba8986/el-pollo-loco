@@ -14,6 +14,7 @@ class World {
   keyboard;
   camera_x = 0;
   gameover = false;
+  points = 0;
 
   coinSound = new Audio('./audio/coin.mp3');
   bottleSound = new Audio('./audio/bottle.mp3');
@@ -75,8 +76,9 @@ class World {
    */
   checkJumpOnEnemy() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy) && this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof ChickenSmall)) {
-        enemy.energy = 0;
+      if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.energy && (enemy instanceof Chicken || enemy instanceof ChickenSmall)) {
+        this.getPoints(enemy);
+        enemy.energy = 0;  
       }
     });
   }
@@ -105,6 +107,8 @@ class World {
     if (this.coinCounter < 5) {
       this.coinCounter++;
     }
+    this.points += 1000;
+    this.showPoints();
     coin.width = 0;
     coin.height = 0;
   }
@@ -170,10 +174,23 @@ class World {
           enemy.energy -= 25;
           enemy.hit();
           bottle.enemyHit = true;
+          this.getPoints(enemy);
           // bottle.splashed = true;
         }
       })
     })
+  }
+
+
+  getPoints(enemy) {
+    if(enemy instanceof Chicken) {
+      this.points += 300;
+    } else if(enemy instanceof ChickenSmall) {
+      this.points += 500;
+    } else if (enemy instanceof Endboss) {
+      this.points += 1500;
+    }
+    this.showPoints();
   }
 
 
@@ -355,6 +372,11 @@ class World {
     //X-Koordinate wird wieder negiert
     mo.x = mo.x * -1;
     this.ctx.restore();
+  }
+
+
+  showPoints() {
+    document.getElementById('point-counter').innerHTML = this.points;
   }
 
 

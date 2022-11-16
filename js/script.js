@@ -20,6 +20,7 @@ function startGame() {
     document.getElementById('game-buttons').style.display = 'flex';
     document.getElementById('mobile-buttons').style.display = 'flex';
     document.getElementById('canvas').classList.remove('d-none');
+    document.getElementById('point-counter').classList.remove('d-none');
     setMobileBtnControl();
 }
 
@@ -92,4 +93,5 @@ function pauseGame() {
   document.getElementById('layer').classList.toggle('d-none');
   document.getElementById('pause-title').classList.toggle('d-none');
 }
+
 
