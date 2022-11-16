@@ -40,6 +40,7 @@ class World {
       this.checkBottleHarvest();
       this.checkCollisionBottle();
       this.checkThrowObjects();
+      this.fadeInMusic();
       this.fadeOutMusic();
       this.checkMute();
     }, 200);
@@ -176,12 +177,11 @@ class World {
   fadeInMusic() {
     setInterval(() => {
       let dis = this.endboss.distanceTo(this.character);
-      if(dis < 1000) {
+      if(dis < 1200 && dis > 500) {
         this.endboss_music.play();
+        let vol = (1200-dis)/700;
+        this.endboss_music.volume = vol;
       } 
-      let vol = (1000-dis)/800;
-      console.log(dis);
-      console.log(vol);
     }, 1000);
   }
 
@@ -189,13 +189,11 @@ class World {
   fadeOutMusic() {
     setInterval(() => {
       let dis = this.endboss.distanceTo(this.character);
-      if(dis < 1500) {
-        let vol = 1- (1500-dis)/1000;
+      if(dis < 1500 && dis > 800) {
+        let vol = 1- (1500-dis)/700;
         this.levelMusic.volume = vol;
-        console.log(dis);
-        console.log(vol);
       } 
-    });
+    }, 1000);
   }
 
 
