@@ -20,7 +20,7 @@ function startGame() {
     document.getElementById('game-buttons').style.display = 'flex';
     document.getElementById('mobile-buttons').style.display = 'flex';
     document.getElementById('canvas').classList.remove('d-none');
-    document.getElementById('point-counter').classList.remove('d-none');
+    document.getElementById('total-points').classList.remove('d-none');
     setMobileBtnControl();
 }
 

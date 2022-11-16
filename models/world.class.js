@@ -15,6 +15,7 @@ class World {
   camera_x = 0;
   gameover = false;
   points = 0;
+  addedPoints = 0;
 
   coinSound = new Audio('./audio/coin.mp3');
   bottleSound = new Audio('./audio/bottle.mp3');
@@ -38,8 +39,6 @@ class World {
   run() {
     setStoppableInterval(() => {
       this.checkCollisions();
-      this.checkCoinHarvest();
-      this.checkBottleHarvest();
       this.checkCollisionBottle();
       this.checkThrowObjects();
       this.fadeInMusic();
@@ -47,6 +46,11 @@ class World {
       this.checkMute();
       this.checkPaused();
     }, 200);
+
+    setInterval(() => {
+      this.checkCoinHarvest();
+      this.checkBottleHarvest();
+    }, 1000/100);
 
 
     setInterval(() => {
@@ -109,6 +113,7 @@ class World {
     }
     this.points += 1000;
     this.showPoints();
+    this.showAddedPoints(1000);
     coin.width = 0;
     coin.height = 0;
   }
@@ -183,13 +188,16 @@ class World {
 
 
   getPoints(enemy) {
+    let amount = 0;
     if(enemy instanceof Chicken) {
-      this.points += 300;
+      amount = 300;
     } else if(enemy instanceof ChickenSmall) {
-      this.points += 500;
+      amount = 500;
     } else if (enemy instanceof Endboss) {
-      this.points += 1500;
+      amount = 1500;
     }
+    this.points += amount;
+    this.showAddedPoints(amount);
     this.showPoints();
   }
 
@@ -298,7 +306,7 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
     // ----- Space for fixed objects like statBar -----
     this.addToMap(this.statusBarHealth);
-    this.addToMap(this.statusBarCoin);
+    // this.addToMap(this.statusBarCoin);
     this.addToMap(this.statusBarBottle);
     //Cam forward
     this.ctx.translate(this.camera_x, 0);
@@ -316,7 +324,7 @@ class World {
     //requestAnimation Funktion kennt kein 'this' - die Funktion wird abhängig von Grafikleistung wiederholt aufgerufen
     let self = this;
     requestAnimationFrame(function () {
-      self.draw();
+      self.draw(); 
     });
   }
 
@@ -377,6 +385,13 @@ class World {
 
   showPoints() {
     document.getElementById('point-counter').innerHTML = this.points;
+  }
+
+  showAddedPoints(amount) {
+    document.getElementById('added-points').innerHTML += `+${amount} <br>`;
+    setTimeout(() => {
+      document.getElementById('added-points').innerHTML = '';
+    }, 1000)
   }
 
 
