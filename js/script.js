@@ -37,7 +37,9 @@ function showControls() {
 
 function hideControls() {
   document.getElementById('control-screen').style.display = 'none';
-  document.getElementById('layer').classList.add('d-none');
+  if(!paused) {
+    document.getElementById('layer').classList.add('d-none');
+  }
 }
 
 
@@ -86,5 +88,6 @@ function pauseGame() {
   }
   document.getElementById('pause-game').classList.toggle('fa-pause');
   document.getElementById('pause-game').classList.toggle('fa-play');
+  document.getElementById('layer').classList.toggle('d-none');
 }
 
