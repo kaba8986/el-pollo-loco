@@ -30,6 +30,19 @@ body {
 }
 
 
+#pause-title {
+  position: absolute; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  font-size: 70px;
+  font-weight: bold;
+  color: rgb(255, 194, 103);
+  text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;
+}
+
+
 
 /******************** Headline ***********************/
 

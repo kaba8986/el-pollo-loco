@@ -86,8 +86,10 @@ function pauseGame() {
   } else {
     paused = true;
   }
+
   document.getElementById('pause-game').classList.toggle('fa-pause');
   document.getElementById('pause-game').classList.toggle('fa-play');
   document.getElementById('layer').classList.toggle('d-none');
+  document.getElementById('pause-title').classList.toggle('d-none');
 }
 
