@@ -1,4 +1,5 @@
 class World {
+
   character = new Character();
   statusBarHealth = new StatusBarHealth();
   statusBarCoin = new StatusBarCoin();
@@ -6,7 +7,8 @@ class World {
   statusBarEndboss = new StatusBarEndboss();
   throwableObjects = [];
   coinCounter = 0;
-  bottleCounter = 5;
+  bottleCounter = 0;
+  collectedBottles = 0;
   shootable = true;
   level = level1;
   endboss = this.level.enemies[this.level.enemies.length - 1];
@@ -18,8 +20,9 @@ class World {
   win = false;
   points = 0;
   addedPoints = 0;
-  killedByJump = 0;
-  killedByThrow = 0;
+  killedChicken = 0;
+  killedSmallChicken = 0;
+  killedEndboss = 0;
   loosable = true;
 
   coinSound = new Audio('./audio/coin.mp3');
@@ -27,6 +30,7 @@ class World {
   levelMusic = new Audio('./audio/level_music.mp3');
   endbossMusic = new Audio('./audio/endboss.mp3');
   win = new Audio('./audio/win.mp3');
+  loose = new Audio('./audio/loose.mp3');
 
 
   constructor(canvas, keyboard) {
@@ -76,7 +80,7 @@ class World {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.energy) {
         this.character.hit();
-        this.loosePoints();
+        // this.loosePoints();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
     });
@@ -91,7 +95,6 @@ class World {
       if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.energy && (enemy instanceof Chicken || enemy instanceof ChickenSmall)) {
         this.getPoints(enemy);
         enemy.energy = 0;
-        this.killedByJump++;
       }
     });
   }
@@ -145,9 +148,8 @@ class World {
    * @param {Bottle} bottle 
    */
   collectBottle(bottle) {
-    if (this.bottleCounter < 5) {
-      this.bottleCounter++;
-    }
+    this.bottleCounter++;
+    this.collectedBottles++;
     this.points += 200;
     this.showPoints();
     this.showAddedPoints(200);
@@ -160,10 +162,9 @@ class World {
    * Creates throwable Bottles and put them in an array
    */
   checkThrowObjects() {
+    document.getElementById('bottle-counter').innerHTML = `x ${this.bottleCounter}`;
     if (this.keyboard.D && this.bottleCounter) {
-      setTimeout(() => {
-        this.shootable = true;
-      }, 500);
+      setTimeout(() => {this.shootable = true;}, 500);
       if (this.shootable) {
         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
         if (this.character.otherDirection) {
@@ -171,7 +172,6 @@ class World {
           bottle.x = this.character.x;
         }
         this.bottleCounter--;
-        this.statusBarBottle.setPercentage(this.bottleCounter);
         this.throwableObjects.push(bottle);
         this.shootable = false;
       }
@@ -206,8 +206,10 @@ class World {
     let amount = 0;
     if (enemy instanceof Chicken) {
       amount = +300;
+      this.killedChicken++;
     } else if (enemy instanceof ChickenSmall) {
       amount = +500;
+      this.killedSmallChicken++;
     } else if (enemy instanceof Endboss) {
       amount = +1500;
     }
@@ -356,7 +358,7 @@ class World {
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarEndboss);
     // this.addToMap(this.statusBarCoin); 
-    this.addToMap(this.statusBarBottle);
+    // this.addToMap(this.statusBarBottle);
     //Cam forward
     this.ctx.translate(this.camera_x, 0);
 
@@ -481,7 +483,9 @@ class World {
     this.gameover = true;
     setTimeout(() => {
       this.showEndscreen('loose');
+      this.playSound(this.loose, 0.5);
     }, 1000)
+ 
   }
 
 
@@ -490,6 +494,7 @@ class World {
    */
   winGame() {
     setTimeout(() => {
+      this.killedEndboss = 1;
       this.endboss.dieCharacter();
       this.playSound(this.endboss.falling, 0.4);
       this.playSound(this.win, 0.4);
@@ -506,7 +511,7 @@ class World {
     this.showResults(end);
     setTimeout(() => {
       document.getElementById('end-screen-content').style.display = 'flex';
-    }, 1500)
+    }, 2000)
   }
 
 
@@ -515,11 +520,13 @@ class World {
       document.getElementById('winner-display').style.color = `rgb(109, 255, 141)`;
       document.getElementById('winner-display').innerHTML = 'You win!';
     }
-    document.getElementById('endgame-points').innerHTML = `${this.points}`;
-    document.getElementById('endgame-coins').innerHTML = `${this.coinCounter}`;
-    document.getElementById('endgame-totalkill').innerHTML = `${this.killedByJump + this.killedByThrow}`;
-    document.getElementById('endgame-kill-jump').innerHTML = `${this.killedByJump}`;
-    document.getElementById('endgame-kill-bottle').innerHTML = `${this.killedByThrow}`;
+    document.getElementById('endgame-coins').innerHTML = `${this.coinCounter} x 1000`;
+    document.getElementById('endgame-bottles').innerHTML = `${this.bottleCounter} x 200`;
+    document.getElementById('endgame-totalkill').innerHTML = `${this.killedChicken + this.killedSmallChicken + this.killedEndboss}`;
+    document.getElementById('killed-chicken').innerHTML = `${this.killedChicken} x 300`;
+    document.getElementById('killed-small-chicken').innerHTML = `${this.killedSmallChicken} x 500`;
+    document.getElementById('killed-endboss').innerHTML = `${this.killedEndboss} x 7500`;
+    document.getElementById('endgame-points').innerHTML = `${this.points - this.collectedBottles*200 + this.bottleCounter*200}`;
   }
 
 }

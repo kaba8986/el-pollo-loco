@@ -22,10 +22,10 @@ class StatusBarEndboss extends DrawableObject {
   showBar() {
     setInterval(() => {
       if(world.endboss.distanceTo(world.character) < 800) {
-        world.statusBarBottle.y = 100;
+        document.getElementById('total-bottles').style.top = '100px';
         this.width = 180;
       } else {
-        world.statusBarBottle.y = 50;
+        document.getElementById('total-bottles').style.top = '60px';
         this.width = 0;
       }
     }, 200);

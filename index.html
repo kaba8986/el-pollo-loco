@@ -84,6 +84,10 @@
       <div id="point-counter">0</div>
       <div id="added-points"></div>
     </div>
+    <div id="total-bottles">
+      <img src="img/6_salsa_bottle/salsa_bottle.png" alt="">
+      <div id="bottle-counter">x 0</div>
+    </div>
     <div id="mobile-buttons">
       <div id="mobile-walk-buttons">
         <div id="mobile-left" class="game-buttons"><i class="fa-solid fa-chevron-left"></i></div>
@@ -99,26 +103,35 @@
         <h2 id="winner-display">You Loose!</h2>
         <div id="stats">
           <div class="statline">
-            <span class="label">Total Points: </span>
-            <span id="endgame-points">23 000</span>
-          </div>
-          <div class="statline">
             <span class="label">Collected Coins: </span>
             <span id="endgame-coins">12</span>
+          </div>
+          <div class="statline">
+            <span class="label">Saved Bottles: </span>
+            <span id="endgame-bottles">12</span>
           </div>
           <div class="statline">
             <span class="label">Killed Enemies: </span>
             <span id="endgame-totalkill">18</span>
           </div>
+          <div id="overview" class="statline">
+              <div class="kills">
+                <span class="label">Chicken: </span>
+                <span id="killed-chicken">0</span>
+              </div>
+              <div class="kills">
+                <span class="label">Small Chicken: </span>
+                <span id="killed-small-chicken">0</span>
+              </div>
+              <div class="kills">
+                <span class="label">Endboss: </span>
+                <span id="killed-endboss">0</span>
+              </div>
+          </div>
+          <hr>
           <div class="statline">
-            <div class="kills">
-              <span class="label">by Jump: </span>
-              <span id="endgame-kill-jump">10</span>
-            </div>
-            <div class="kills">
-              <span class="label">by Bottle: </span>
-              <span id="endgame-kill-bottle">8</span>
-            </div>
+            <span class="label">Total Points: </span>
+            <span id="endgame-points">23 000</span>
           </div>
         </div>
         <button id="restart-game" class="game-buttons" onclick="init()">Menu</button>
