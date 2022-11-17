@@ -189,10 +189,10 @@ body {
 #total-bottles {
   position: absolute;
   top: 5%;
-  left: 5%;
+  left: 3%;
   font-size: 24px;
   color: rgb(255, 223, 175);
-  height: 60px;
+  height: 12.5%;
   display: none;
 }
 
