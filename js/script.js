@@ -5,6 +5,9 @@ let paused = false;
 intervalIds = [];
 
 
+function init() {
+  location.reload();
+}
 
 function setStoppableInterval(fn, time) {
   let id = setInterval(fn, time);
@@ -20,6 +23,7 @@ function startGame() {
     document.getElementById('game-buttons').style.display = 'flex';
     document.getElementById('mobile-buttons').style.display = 'flex';
     document.getElementById('canvas').classList.remove('d-none');
+    document.getElementById('end-screen').style.left = '100%';
     document.getElementById('total-points').classList.remove('d-none');
     setMobileBtnControl();
 }

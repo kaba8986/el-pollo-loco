@@ -74,7 +74,6 @@ class Endboss extends MovableObject {
 
   animate() {
     //Bilder wechseln
-    let dead = false;
     setInterval(() => {
       if(!paused) {
         if(this.isHurt()) {
@@ -82,13 +81,12 @@ class Endboss extends MovableObject {
         } else if (this.energy <= 100 && this.distanceTo(world.character) > 0 && !this.isDead()) {
           this.playAnimation(this.IMAGES_WALKING);
           this.moveLeft();
-        } else if(this.isDead() && !dead) {
+        } else if(!this.energy && !this.dead) {
           this.playAnimation(this.IMAGES_DEAD);
-          dead = true;
-        } else if (dead) {
+          this.dead = true;
+        } else if (this.dead) {
           this.img.src = './img/4_enemie_boss_chicken/5_dead/G27.png';
-          world.win = true;
-          world.stopGame();
+          world.stopGame('win');
         } else {
           this.playAnimation(this.IMAGES_ALERT);  
         }

@@ -32,66 +32,99 @@
 </head>
 
 <body>
-    <!-- MAIN-SCREEN GAME  -->
-    <div id="content">
-      <div id="main-buttons">
-        <div class="main-buttons">
-          <button id="start-game" onclick="startGame()">Start Game</button>
-          <button id="main-controls" onclick="showControls()">Controls</button>
-        </div>
-        <!-- <button id="back" class="d-none" onclick="goBack()">Back</button> -->
+  <!-- MAIN-SCREEN GAME  -->
+  <div id="content">
+    <div id="main-buttons">
+      <div class="main-buttons">
+        <button id="start-game" onclick="startGame()">Start Game</button>
+        <button id="main-controls" onclick="showControls()">Controls</button>
       </div>
-      <div id="footline">
-        <a href="https://www.freepik.com/free-vector/empty-desert-forest-landscape-sunset-time-scene_15951483.htm#query=desert%20cartoon&position=15&from_view=search&track=sph">Image by brgfx </a><span>on Freepik</span>
+      <!-- <button id="back" class="d-none" onclick="goBack()">Back</button> -->
+    </div>
+    <div id="footline">
+      <a
+        href="https://www.freepik.com/free-vector/empty-desert-forest-landscape-sunset-time-scene_15951483.htm#query=desert%20cartoon&position=15&from_view=search&track=sph">Image
+        by brgfx </a><span>on Freepik</span>
+    </div>
+    <div id="layer" class="d-none"></div>
+    <div id="pause-title" class="d-none">PAUSE</div>
+    <img id="start-img" class="" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+    <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
+    <!-- CONTROLS  -->
+    <div id="control-screen">
+      <div id="close-controls" class="game-buttons" onclick="hideControls()"><i class="fa-solid fa-xmark"></i></div>
+      <table>
+        <tr>
+          <td class="key"><i class="fa-solid fa-arrow-left"></i></td>
+          <td class="reaction"><span>Move Character Left</span></td>
+        </tr>
+        <tr>
+          <td class="key"><i class="fa-solid fa-arrow-right"></i></td>
+          <td class="reaction"><span>Move Character Right</span></td>
+        </tr>
+        <tr>
+          <td class="key"><b>SPACE</b></td>
+          <td class="reaction"><span>Let Character Jump</span></td>
+        </tr>
+        <tr>
+          <td class="key"><b>D</b></td>
+          <td class="reaction"><span>Throw A Bottle</span></td>
+        </tr>
+      </table>
+    </div>
+    <div id="game-buttons">
+      <div id="mute-music-button" class="game-buttons" onclick="muteMusic()"><i id="mute-music"
+          class="fa-solid fa-music"></i><i id="slash" class="d-none"></i></div>
+      <div><i id="mute-sounds" class="fa-solid fa-volume-low game-buttons" onclick="muteSounds()"></i></div>
+      <div><i id="pause-game" class="fa-solid fa-pause game-buttons" onclick="pauseGame()"></i></div>
+      <div id="quick-controls" class="game-buttons"><i class="fa-solid fa-gamepad" onclick="showControls()"></i></div>
+      <div id="full-screen" class="game-buttons"><i class="fa-solid fa-expand" onclick="toggleFullscreen()"></i></div>
+    </div>
+    <div id="total-points" class="d-none">
+      <div id="point-counter">0</div>
+      <div id="added-points"></div>
+    </div>
+    <div id="mobile-buttons">
+      <div id="mobile-walk-buttons">
+        <div id="mobile-left" class="game-buttons"><i class="fa-solid fa-chevron-left"></i></div>
+        <div id="mobile-right" class="game-buttons"><i class="fa-solid fa-chevron-right"></i></div>
       </div>
-      <div id="layer" class="d-none"></div>
-      <div id="pause-title" class="d-none">PAUSE</div>
-      <img id="start-img" class="" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
-      <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
-      <!-- CONTROLS  -->
-      <div id="control-screen">
-        <div id="close-controls" class="game-buttons" onclick="hideControls()"><i class="fa-solid fa-xmark"></i></div>
-        <table>
-          <tr>
-            <td class="key"><i class="fa-solid fa-arrow-left"></i></td>
-            <td class="reaction"><span>Move Character Left</span></td>
-          </tr>
-          <tr>
-            <td class="key"><i class="fa-solid fa-arrow-right"></i></td>
-            <td class="reaction"><span>Move Character Right</span></td>
-          </tr>
-          <tr>
-            <td class="key"><b>SPACE</b></td>
-            <td class="reaction"><span>Let Character Jump</span></td>
-          </tr>
-          <tr>
-            <td class="key"><b>D</b></td>
-            <td class="reaction"><span>Throw A Bottle</span></td>
-          </tr>
-        </table>
-      </div>
-      <div id="game-buttons">
-        <div id="mute-music-button" class="game-buttons" onclick="muteMusic()"><i id="mute-music" class="fa-solid fa-music"></i><i id="slash" class="d-none"></i></div>
-        <div><i id="mute-sounds" class="fa-solid fa-volume-low game-buttons" onclick="muteSounds()"></i></div>
-        <div><i id="pause-game" class="fa-solid fa-pause game-buttons" onclick="pauseGame()"></i></div>
-        <div id="quick-controls" class="game-buttons"><i class="fa-solid fa-gamepad" onclick="showControls()"></i></div>
-        <div id="full-screen" class="game-buttons"><i class="fa-solid fa-expand" onclick="toggleFullscreen()"></i></div>
-      </div>
-      <div id="total-points" class="d-none">
-        <div id="point-counter">0</div>
-        <div id="added-points"></div>
-      </div>
-      <div id="mobile-buttons">
-        <div id="mobile-walk-buttons">
-          <div id="mobile-left" class="game-buttons"><i class="fa-solid fa-chevron-left"></i></div>
-          <div id="mobile-right" class="game-buttons"><i class="fa-solid fa-chevron-right"></i></div>
-        </div>
-        <div id="mobile-action-buttons">
-          <div id="mobile-jump" class="game-buttons"><i class="fa-solid fa-chevron-up"></i></div>
-          <div id="mobile-throw" class="game-buttons"><i class="fa-solid fa-crosshairs"></i></div>
-        </div>
+      <div id="mobile-action-buttons">
+        <div id="mobile-jump" class="game-buttons"><i class="fa-solid fa-chevron-up"></i></div>
+        <div id="mobile-throw" class="game-buttons"><i class="fa-solid fa-crosshairs"></i></div>
       </div>
     </div>
+    <div id="end-screen">
+      <div id="end-screen-content">
+        <h2 id="winner-display">You Loose!</h2>
+        <div id="stats">
+          <div class="statline">
+            <span class="label">Total Points: </span>
+            <span id="endgame-points">23 000</span>
+          </div>
+          <div class="statline">
+            <span class="label">Collected Coins: </span>
+            <span id="endgame-coins">12</span>
+          </div>
+          <div class="statline">
+            <span class="label">Killed Enemies: </span>
+            <span id="endgame-totalkill">18</span>
+          </div>
+          <div class="statline">
+            <div class="kills">
+              <span class="label">by Jump: </span>
+              <span id="endgame-kill-jump">10</span>
+            </div>
+            <div class="kills">
+              <span class="label">by Bottle: </span>
+              <span id="endgame-kill-bottle">8</span>
+            </div>
+          </div>
+        </div>
+        <button id="restart-game" class="game-buttons" onclick="init()">Menu</button>
+      </div>
+    </div>
+  </div>
 
 
 

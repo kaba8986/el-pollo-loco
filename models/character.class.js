@@ -60,7 +60,7 @@ class Character extends MovableObject {
 
   constructor() {
     super().loadImage('./img/2_character_pepe/2_walk/W-21.png'),
-      this.loadImages(this.IMAGES_WALKING);
+    this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
@@ -101,7 +101,7 @@ class Character extends MovableObject {
       if (!paused) {
         if (this.isDead()) {
           this.playAnimation(this.IMAGES_DEAD);
-          world.stopGame();
+          world.stopGame('loose');
           this.dieCharacter();
         } else if (this.isHurt()) {
           this.playAnimation(this.IMAGES_HURT);

@@ -18,11 +18,15 @@ class World {
   win = false;
   points = 0;
   addedPoints = 0;
+  killedByJump = 0;
+  killedByThrow = 0;
+  loosable = true;
 
   coinSound = new Audio('./audio/coin.mp3');
   bottleSound = new Audio('./audio/bottle.mp3');
   levelMusic = new Audio('./audio/level_music.mp3');
   endbossMusic = new Audio('./audio/endboss.mp3');
+  win = new Audio('./audio/win.mp3');
 
 
   constructor(canvas, keyboard) {
@@ -47,12 +51,13 @@ class World {
       this.fadeOutMusic();
       this.checkMute();
       this.checkPaused();
+      console.log(this.endboss.energy);
     }, 200);
 
     setInterval(() => {
       this.checkCoinHarvest();
       this.checkBottleHarvest();
-    }, 1000/100);
+    }, 1000 / 100);
 
 
     setInterval(() => {
@@ -71,6 +76,7 @@ class World {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.energy) {
         this.character.hit();
+        this.loosePoints();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
     });
@@ -84,7 +90,8 @@ class World {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.energy && (enemy instanceof Chicken || enemy instanceof ChickenSmall)) {
         this.getPoints(enemy);
-        enemy.energy = 0;  
+        enemy.energy = 0;
+        this.killedByJump++;
       }
     });
   }
@@ -110,9 +117,7 @@ class World {
    * @param {Coin} bottle 
    */
   collectCoin(coin) {
-    if (this.coinCounter < 5) {
-      this.coinCounter++;
-    }
+    this.coinCounter++;
     this.points += 1000;
     this.showPoints();
     this.showAddedPoints(1000);
@@ -143,13 +148,16 @@ class World {
     if (this.bottleCounter < 5) {
       this.bottleCounter++;
     }
+    this.points += 200;
+    this.showPoints();
+    this.showAddedPoints(200);
     bottle.width = 0;
     bottle.height = 0;
   }
 
 
   /**
-   * Creates throwable Bottles and put in array
+   * Creates throwable Bottles and put them in an array
    */
   checkThrowObjects() {
     if (this.keyboard.D && this.bottleCounter) {
@@ -178,13 +186,10 @@ class World {
     this.level.enemies.forEach((enemy) => {
       this.throwableObjects.forEach((bottle) => {
         if (bottle.isColliding(enemy) && !bottle.splashed) {
-          enemy.energy -= 25;
           enemy.hit();
-          bottle.enemyHit = true;
           this.getPoints(enemy);
-          console.log(enemy.energy);
-          // bottle.splashed = true;
-          if(enemy instanceof Endboss) {
+          bottle.enemyHit = true; 
+          if (enemy instanceof Endboss) {
             this.statusBarEndboss.setPercentage(enemy.energy);
           }
         }
@@ -193,18 +198,41 @@ class World {
   }
 
 
+  /**
+   * Increase point-counter by type of enemy
+   * @param {Object} enemy 
+   */
   getPoints(enemy) {
     let amount = 0;
-    if(enemy instanceof Chicken) {
-      amount = 300;
-    } else if(enemy instanceof ChickenSmall) {
-      amount = 500;
+    if (enemy instanceof Chicken) {
+      amount = +300;
+    } else if (enemy instanceof ChickenSmall) {
+      amount = +500;
     } else if (enemy instanceof Endboss) {
-      amount = 1500;
+      amount = +1500;
     }
     this.points += amount;
     this.showAddedPoints(amount);
     this.showPoints();
+  }
+
+
+  /**
+   * Decrease point-counter - limited by once per second
+   */
+  loosePoints() {
+    if(this.loosable) {
+      this.points -= 300;
+      if (this.points <= 0) {
+        this.points = 0;
+      }     
+    this.showPoints();
+    this.showAddedPoints(-300);
+    this.loosable = false;
+    }
+    setTimeout(() => {
+      this.loosable = true;
+    }, 1000);
   }
 
 
@@ -247,12 +275,24 @@ class World {
 
 
   /**
+   * Mute running music
+   */
+  muteComplete() {
+    this.pauseSound(this.levelMusic);
+    this.pauseSound(this.endbossMusic);
+    this.pauseSound(this.character.walking_sound);
+    this.pauseSound(this.character.hurt_sound);
+    this.pauseSound(this.character.jump_sound);
+  }
+
+
+  /**
    * Fade in Boss-Music by checking distance to character
    */
   fadeInMusic() {
     setInterval(() => {
       let dis = this.endboss.distanceTo(this.character);
-      if (mutedMusic || this.gameover || dis > 1200) {
+      if (mutedMusic || this.gameover || dis > 1200 || this.endboss.isDead()) {
         this.endbossMusic.volume = 0;
       } else {
         if (dis < 1200 && dis > 500 && !paused) {
@@ -284,8 +324,11 @@ class World {
   }
 
 
+  /**
+   * Pause Sounds if game paused
+   */
   checkPaused() {
-    if(paused) {
+    if (paused) {
       this.pauseSound(this.levelMusic);
       this.pauseSound(this.endbossMusic);
     } else {
@@ -307,7 +350,6 @@ class World {
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
 
-
     //Cam back
     this.ctx.translate(-this.camera_x, 0);
     // ----- Space for fixed objects like statBar -----
@@ -318,7 +360,7 @@ class World {
     //Cam forward
     this.ctx.translate(this.camera_x, 0);
 
-    //Foreground Elements
+    //Front Elements
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.coins);
@@ -331,7 +373,7 @@ class World {
     //requestAnimation Funktion kennt kein 'this' - die Funktion wird abhängig von Grafikleistung wiederholt aufgerufen
     let self = this;
     requestAnimationFrame(function () {
-      self.draw(); 
+      self.draw();
     });
   }
 
@@ -352,7 +394,6 @@ class World {
    * @param {Movable Object} mo 
    */
   addToMap(mo) {
-    //Bilder spiegeln wenn Character nach links läuft
     if (mo.otherDirection) {
       this.flipImage(mo);
     }
@@ -365,6 +406,7 @@ class World {
       this.flipImageBack(mo);
     }
   }
+
 
   /**
    * Mirrors images of movable Object
@@ -390,34 +432,97 @@ class World {
   }
 
 
+  /**
+   * Display game points
+   */
   showPoints() {
     document.getElementById('point-counter').innerHTML = this.points;
   }
 
+
+  /**
+   * Display added game points
+   * @param {number} amount 
+   */
   showAddedPoints(amount) {
-    document.getElementById('added-points').innerHTML += `+${amount} <br>`;
+    if (amount < 0) {
+      document.getElementById('added-points').style.color = `red`;
+      document.getElementById('added-points').innerHTML += `${amount} <br>`;
+    } else {
+      document.getElementById('added-points').style.color = `rgb(109, 255, 141)`;
+      document.getElementById('added-points').innerHTML += `+${amount} <br>`;
+    }
     setTimeout(() => {
       document.getElementById('added-points').innerHTML = '';
     }, 1000)
   }
 
 
-  stopGame() {   
+  /**
+   * Stopp current game run
+   * @param {string} end 
+   */
+  stopGame(end) {
     intervalIds.forEach(clearInterval);
-    this.pauseSound(this.levelMusic);
-    this.pauseSound(this.endbossMusic);
-    if(!this.win) {
-      this.playSound(this.character.die_sound, 0.4);
-      this.gameover = true;
-      // this.looseGame();
-    } else if(this.win) {
-      setTimeout(() => {
-        this.endboss.dieCharacter();
-        this.playSound(this.endboss.falling, 0.4);
-      }, 1000);
-      //this.winGame();
+    this.muteComplete();
+    if (end == 'loose' && !this.gameover) {
+      this.looseGame();
+    } else if (end == 'win' && !this.gameover) {
+      this.winGame();
     }
   }
+
+
+  /**
+   * Initialize loosing game
+   */
+  looseGame() {
+    this.playSound(this.character.die_sound, 0.4);
+    this.gameover = true;
+    setTimeout(() => {
+      this.showEndscreen('loose');
+    }, 1000)
+  }
+
+
+  /**
+   * Initialize winning game
+   */
+  winGame() {
+    setTimeout(() => {
+      this.endboss.dieCharacter();
+      this.playSound(this.endboss.falling, 0.4);
+      this.playSound(this.win, 0.4);
+      this.gameover = true;
+    }, 1000);
+    setTimeout(() => {
+      this.showEndscreen('win');
+    }, 2500)
+  }
+
+
+  showEndscreen(end) {
+    document.getElementById('end-screen').style.left = '0';
+    this.showResults(end);
+    setTimeout(() => {
+      document.getElementById('end-screen-content').style.display = 'flex';
+    }, 1500)
+  }
+
+
+  showResults(end) {
+    if (end == 'win') {
+      document.getElementById('winner-display').style.color = `rgb(109, 255, 141)`;
+      document.getElementById('winner-display').innerHTML = 'You win!';
+    }
+    document.getElementById('endgame-points').innerHTML = `${this.points}`;
+    document.getElementById('endgame-coins').innerHTML = `${this.coinCounter}`;
+    document.getElementById('endgame-totalkill').innerHTML = `${this.killedByJump + this.killedByThrow}`;
+    document.getElementById('endgame-kill-jump').innerHTML = `${this.killedByJump}`;
+    document.getElementById('endgame-kill-bottle').innerHTML = `${this.killedByThrow}`;
+  }
+
 }
+
 
 

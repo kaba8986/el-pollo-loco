@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
   acceleration = 3;
   energy = 100;
   lastHit = 0;
+  dead = false;
 
 
   applyGravity() {
@@ -72,7 +73,11 @@ class MovableObject extends DrawableObject {
 
 
   hit() {
-    this.energy -= 5;
+    if(this instanceof Character) {
+      this.energy -= 5;
+    } else {
+      this.energy -= 25;
+    }
     if (this.energy < 0) {
       this.energy = 0;
     } else {
