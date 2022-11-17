@@ -77,13 +77,15 @@ class World {
    * Check if character collides with enemy - if yes, execute hit-function and set new bar-image
    */
   checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.energy) {
-        this.character.hit();
-        // this.loosePoints();
-        this.statusBarHealth.setPercentage(this.character.energy);
-      }
-    });
+      this.level.enemies.forEach((enemy) => {
+        if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.energy && !paused) {
+          this.character.hit();
+          // this.loosePoints();
+          this.statusBarHealth.setPercentage(this.character.energy);
+          
+        }
+      });
+    
   }
 
 
