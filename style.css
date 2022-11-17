@@ -72,8 +72,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 722px;
-  overflow: hidden; 
+  width: 722px;
+  overflow: hidden;       
 }
 
 #content img {
@@ -86,7 +86,7 @@ body {
   position: relative;
   display: flex;
   justify-content: center;
-  max-width: 722px;
+  width: 100%;
 }
 
 /**** BUTTONS ***/
@@ -377,7 +377,11 @@ hr {
 /***************** MEDIA ******************/
 
 @media only screen and (max-width: 720px) {
-  #content {
+#content {
+  width: 100%;
+}
+
+  #container {
     width: 100%;
   }
 

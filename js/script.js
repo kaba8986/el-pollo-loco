@@ -9,11 +9,6 @@ function init() {
   location.reload();
 }
 
-window.addEventListener('resize', () => {
-  let canvasWidth = document.getElementById('canvas').offsetWidth;
-  document.getElementById('container').style.width = canvasWidth;
-  console.log(canvasWidth);
-})
 
 function setStoppableInterval(fn, time) {
   let id = setInterval(fn, time);
@@ -32,6 +27,7 @@ function startGame() {
     document.getElementById('end-screen').style.left = '100%';
     document.getElementById('total-points').classList.remove('d-none');
     document.getElementById('total-bottles').style.display = 'flex';
+    containerWidth();
     setMobileBtnControl();
 }
 
@@ -51,10 +47,9 @@ function hideControls() {
 
 
 function openFullscreen() {
-  let display = document.getElementById('content');
+  let display = document.getElementById('container');
   if(display.classList.contains('fullscreen')) {
     closeFullscreen();
-    console.log('closing-order');
   } else {
     display.classList.add('fullscreen');
     if (display.requestFullscreen) {
@@ -75,7 +70,7 @@ function openFullscreen() {
 }
 
 function closeFullscreen() {
-  let display = document.getElementById('content');
+  let display = document.getElementById('container');
   display.classList.remove('fullscreen');
   if (document.exitFullscreen) {
     document.exitFullscreen();
@@ -88,9 +83,19 @@ function closeFullscreen() {
 
 
 function containerWidth() {
-  let canvasWidth = document.getElementById('canvas').offsetWidth;
-  document.getElementById('canvas').offsetWidth;
+    window.addEventListener('resize', () => {
+      let containerWidth = document.getElementById('container').offsetWidth;
+      document.getElementById('canvas').style.width = containerWidth;
+      console.log(containerWidth);
+    })
 }
+/*
+function containerWidth() {
+  let canvasWidth = document.getElementById('canvas').offsetWidth;
+  document.getElementById('container').style.width = canvasWidth;
+  console.log(canvasWidth);
+}
+*/
 
 
 function muteSounds() {
