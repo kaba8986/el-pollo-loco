@@ -9,6 +9,12 @@ function init() {
   location.reload();
 }
 
+window.addEventListener('resize', () => {
+  let canvasWidth = document.getElementById('canvas').offsetWidth;
+  document.getElementById('container').style.width = canvasWidth;
+  console.log(canvasWidth);
+})
+
 function setStoppableInterval(fn, time) {
   let id = setInterval(fn, time);
   intervalIds.push(id);
@@ -44,22 +50,46 @@ function hideControls() {
 }
 
 
-function toggleFullscreen() {
-  let canvas = document.getElementById('canvas');
-  if (canvas.requestFullscreen) {
-    canvas.requestFullscreen();
-  } else if (canvas.mozRequestFullScreen) {
-    // Firefox
-    canvas.mozRequestFullScreen();
-  } else if (canvas.webkitRequestFullscreen) {
-    // Chrome, Safari and Opera
-    canvas.webkitRequestFullscreen();
-  } else if (canvas.msRequestFullscreen) {
-    // IE/Edge
-    canvas.msRequestFullscreen();
-  } else if (canvas.webkitEnterFullScreen) {
-    canvas.webkitEnterFullScreen();
+function openFullscreen() {
+  let display = document.getElementById('content');
+  if(display.classList.contains('fullscreen')) {
+    closeFullscreen();
+    console.log('closing-order');
+  } else {
+    display.classList.add('fullscreen');
+    if (display.requestFullscreen) {
+      display.requestFullscreen();
+    } else if (display.mozRequestFullScreen) {
+      // Firefox
+      display.mozRequestFullScreen();
+    } else if (display.webkitRequestFullscreen) {
+      // Chrome, Safari and Opera
+      display.webkitRequestFullscreen();
+    } else if (canvas.msRequestFullscreen) {
+      // IE/Edge
+      display.msRequestFullscreen();
+    } else if (canvas.webkitEnterFullScreen) {
+      display.webkitEnterFullScreen();
+    }
   }
+}
+
+function closeFullscreen() {
+  let display = document.getElementById('content');
+  display.classList.remove('fullscreen');
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}
+
+
+function containerWidth() {
+  let canvasWidth = document.getElementById('canvas').offsetWidth;
+  document.getElementById('canvas').offsetWidth;
 }
 
 
