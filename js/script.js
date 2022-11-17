@@ -46,12 +46,20 @@ function hideControls() {
 
 function toggleFullscreen() {
   let canvas = document.getElementById('canvas');
-  if(canvas.requestFullScreen)
-      canvas.requestFullScreen();
-  else if(canvas.webkitRequestFullScreen)
-      canvas.webkitRequestFullScreen();
-  else if(canvas.mozRequestFullScreen)
-      canvas.mozRequestFullScreen();
+  if (canvas.requestFullscreen) {
+    canvas.requestFullscreen();
+  } else if (canvas.mozRequestFullScreen) {
+    // Firefox
+    canvas.mozRequestFullScreen();
+  } else if (canvas.webkitRequestFullscreen) {
+    // Chrome, Safari and Opera
+    canvas.webkitRequestFullscreen();
+  } else if (canvas.msRequestFullscreen) {
+    // IE/Edge
+    canvas.msRequestFullscreen();
+  } else if (canvas.webkitEnterFullScreen) {
+    canvas.webkitEnterFullScreen();
+  }
 }
 
 

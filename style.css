@@ -245,6 +245,7 @@ canvas {
   background: #000;
   display: block;
   border: 1px solid black;
+  z-index: -1;
 }
 
 .d-none {
