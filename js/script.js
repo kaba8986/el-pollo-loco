@@ -25,8 +25,8 @@ function startGame() {
     document.getElementById('mobile-buttons').style.display = 'flex';
     document.getElementById('canvas').classList.remove('d-none');
     document.getElementById('end-screen').style.left = '100%';
-    document.getElementById('total-points').classList.remove('d-none');
-    document.getElementById('total-bottles').style.display = 'flex';
+    // document.getElementById('total-points').classList.remove('d-none');
+    // document.getElementById('total-bottles').style.display = 'flex';
     setMobileBtnControl();
 }
 
