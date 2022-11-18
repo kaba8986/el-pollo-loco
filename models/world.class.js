@@ -15,7 +15,7 @@ class World {
 
   camera_x = 0;
   points = 0;
-  addedPoints = 0;
+  addedPoints = '';
   collectedBottles = 0;
   killedChicken = 0;
   killedSmallChicken = 0;
@@ -122,8 +122,7 @@ class World {
   collectCoin(coin) {
     this.statusBarCoin.coins++;
     this.points += 1000;
-    //this.showPoints();
-    //this.showAddedPoints(1000);
+    this.showAddedPoints(1000);
     coin.width = 0;
     coin.height = 0;
   }
@@ -151,8 +150,7 @@ class World {
     this.statusBarBottle.bottles++;
     this.collectedBottles++;
     this.points += 200;
-    //this.showPoints();
-    //this.showAddedPoints(200);
+    this.showAddedPoints(200);
     bottle.width = 0;
     bottle.height = 0;
   }
@@ -212,10 +210,9 @@ class World {
     } else if (enemy instanceof Endboss) {
       amount = +1500;
     }
+    this.showAddedPoints(amount);
     this.points += amount;
     console.log(this.points);
-    //this.showAddedPoints(amount);
-    //this.showPoints();
   }
 
 
@@ -367,13 +364,31 @@ class World {
     this.addToMap(this.statusBarCoin);
     this.addToMap(this.statusBarBottle);
     this.ctx.font = '32px Arial';
+    this.drawCounters();
+    this.drawPoints();
+    this.drawAddedPoints();
+  }
+
+
+  drawCounters() {
     this.ctx.fillStyle = 'white';
     this.ctx.textAlign = 'left';
     this.ctx.fillText(' x ' + this.statusBarCoin.coins, this.statusBarCoin.width + this.statusBarCoin.x, this.statusBarCoin.y + 32);
     this.ctx.fillText(' x ' + this.statusBarBottle.bottles, this.statusBarBottle.width + this.statusBarBottle.x, this.statusBarBottle.y + 45);
+  }
+
+
+  drawPoints() {
     this.ctx.textAlign = 'right';
     this.ctx.fillStyle = 'gold';
     this.ctx.fillText(this.points, 705, this.statusBarBottle.y + 45);
+  }
+
+  drawAddedPoints() {
+    this.ctx.font = '20px Arial';
+    this.ctx.textAlign = 'right';
+    this.ctx.fillStyle = 'lime';
+    this.ctx.fillText(this.addedPoints, 705, this.statusBarBottle.y + 75);
   }
 
 
@@ -468,20 +483,14 @@ class World {
   /**
    * Display added game points
    * @param {number} amount 
- 
+   */
   showAddedPoints(amount) {
-    if (amount < 0) {
-      document.getElementById('added-points').style.color = `red`;
-      document.getElementById('added-points').innerHTML += `${amount} <br>`;
-    } else {
-      document.getElementById('added-points').style.color = `rgb(109, 255, 141)`;
-      document.getElementById('added-points').innerHTML += `+${amount} <br>`;
-    }
+    this.addedPoints += `+${amount}`;
     setTimeout(() => {
-      document.getElementById('added-points').innerHTML = '';
-    }, 1000)
+      this.addedPoints = '';
+    }, 1000);
   }
-  */
+
 
   /**
    * Stopp current game run
