@@ -472,20 +472,11 @@ class World {
 
 
   /**
-   * Display game points
-
-  showPoints() {
-    document.getElementById('point-counter').innerHTML = this.points;
-  }
-     */
-
-
-  /**
    * Display added game points
    * @param {number} amount 
    */
   showAddedPoints(amount) {
-    this.addedPoints += `+${amount}`;
+    this.addedPoints += `+${amount}  `;
     setTimeout(() => {
       this.addedPoints = '';
     }, 1000);
