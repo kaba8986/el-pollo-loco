@@ -33,8 +33,8 @@
 
 <body>
   <!-- MAIN-SCREEN GAME  -->
-  <div id="content">
-    <div id="container">
+
+    <div id="container" class="fullscreen-element">
       <div id="main-buttons">
         <div class="main-buttons">
           <button id="start-game" onclick="startGame()">Start Game</button>
@@ -51,7 +51,7 @@
       <div id="layer" class="d-none"></div>
       <div id="pause-title" class="d-none">PAUSE</div>
       <img id="start-img" class="" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
-      <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
+      <canvas id="canvas" width="720" height="480" class="d-none fullscreen-element"></canvas>
       <!-- CONTROLS  -->
       <div id="control-screen">
         <div id="close-controls" class="game-buttons" onclick="hideControls()"><i class="fa-solid fa-xmark"></i></div>
@@ -140,7 +140,7 @@
         </div>
       </div>
     </div>
-  </div>
+
 
 
 

@@ -55,7 +55,6 @@ class World {
       this.fadeOutMusic();
       this.checkMute();
       this.checkPaused();
-      console.log(this.endboss.energy);
     }, 200);
 
     setInterval(() => {

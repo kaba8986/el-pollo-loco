@@ -27,7 +27,6 @@ function startGame() {
     document.getElementById('end-screen').style.left = '100%';
     document.getElementById('total-points').classList.remove('d-none');
     document.getElementById('total-bottles').style.display = 'flex';
-    containerWidth();
     setMobileBtnControl();
 }
 
@@ -47,55 +46,27 @@ function hideControls() {
 
 
 function openFullscreen() {
-  let display = document.getElementById('container');
-  if(display.classList.contains('fullscreen')) {
-    closeFullscreen();
-  } else {
-    display.classList.add('fullscreen');
-    if (display.requestFullscreen) {
-      display.requestFullscreen();
-    } else if (display.mozRequestFullScreen) {
-      // Firefox
-      display.mozRequestFullScreen();
-    } else if (display.webkitRequestFullscreen) {
-      // Chrome, Safari and Opera
-      display.webkitRequestFullscreen();
-    } else if (canvas.msRequestFullscreen) {
-      // IE/Edge
-      display.msRequestFullscreen();
-    } else if (canvas.webkitEnterFullScreen) {
-      display.webkitEnterFullScreen();
-    }
-  }
-}
+  let elem = document.getElementById('container');
 
-function closeFullscreen() {
-  let display = document.getElementById('container');
-  display.classList.remove('fullscreen');
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) { /* Safari */
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) { /* IE11 */
-    document.msExitFullscreen();
+  document.getElementById('canvas').classList.add('style-fullscreen');
+
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) {
+    // Firefox
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) {
+    // Chrome, Safari and Opera
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    // IE/Edge
+    elem.msRequestFullscreen();
+  } else if (elem.webkitEnterFullScreen) {
+    elem.webkitEnterFullScreen();
   }
 }
 
 
-function containerWidth() {
-    window.addEventListener('resize', () => {
-      let containerWidth = document.getElementById('container').offsetWidth;
-      document.getElementById('canvas').style.width = containerWidth;
-      console.log(containerWidth);
-    })
-}
-/*
-function containerWidth() {
-  let canvasWidth = document.getElementById('canvas').offsetWidth;
-  document.getElementById('container').style.width = canvasWidth;
-  console.log(canvasWidth);
-}
-*/
 
 
 function muteSounds() {
