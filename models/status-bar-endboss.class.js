@@ -16,17 +16,19 @@ class StatusBarEndboss extends DrawableObject {
     this.width = 0;
     this.height = 55;
     this.setPercentage(100);
-    // this.showBar();
+    this.showBar();
   }
 
   showBar() {
     setInterval(() => {
       if(world.endboss.distanceTo(world.character) < 800) {
-        document.getElementById('total-bottles').style.top = '30%';
+        world.statusBarBottle.y = 100;
+        world.statusBarCoin.y = 170;
         this.width = 180;
       } else {
-        document.getElementById('total-bottles').style.top = '12%';
         this.width = 0;
+        world.statusBarBottle.y = 60;
+        world.statusBarCoin.y = 130;
       }
     }, 200);
   }
