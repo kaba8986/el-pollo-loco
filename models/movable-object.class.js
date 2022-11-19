@@ -75,6 +75,7 @@ class MovableObject extends DrawableObject {
   hit() {
     if(this instanceof Character) {
       this.energy -= 5;
+      this.resetIdleCount();
     } else {
       this.energy -= 25;
     }

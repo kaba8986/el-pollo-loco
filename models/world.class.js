@@ -171,6 +171,7 @@ class World {
         this.statusBarBottle.bottles--;
         this.throwableObjects.push(bottle);
         this.shootable = false;
+        this.character.resetIdleCount();
       }
     }
   }
