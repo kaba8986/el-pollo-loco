@@ -1,8 +1,12 @@
+//Global Variables
 let canvas;
 let world;
 let keyboard = new Keyboard();
 
 
+/**
+ * Setting Eventlistener for Keyboard-Down Actions
+ */
 window.addEventListener('keydown', (event) => {
   if(event.keyCode == 32) {
     keyboard.SPACE = true;
@@ -24,6 +28,10 @@ window.addEventListener('keydown', (event) => {
   }
 });
 
+
+/**
+ * Setting Eventlistener for Keyboard-Up Actions
+ */
 window.addEventListener('keyup', (event) => {
   if(event.keyCode == 32) {
     keyboard.SPACE = false;
@@ -43,53 +51,43 @@ window.addEventListener('keyup', (event) => {
   if(event.keyCode == 68) {
     keyboard.D = false;
   }
-
-
 });
 
-/*MOBILE CONTROL*/
 
+/**
+ * Setting Eventlistener for Mobile-Touch-Events
+ */
 function setMobileBtnControl() {
-
   document.getElementById('canvas').addEventListener('touchstart', (e) => {
     e.preventDefault();
   });
-
   document.getElementById('mobile-left').addEventListener('touchstart', (e) => {
     e.preventDefault();
     keyboard.LEFT = true;
   });
-
   document.getElementById('mobile-left').addEventListener('touchend', (e) => {
     keyboard.LEFT = false;
   });
-
   document.getElementById('mobile-right').addEventListener('touchstart', (e) => {
     e.preventDefault();
     keyboard.RIGHT = true;
   });
-
     document.getElementById('mobile-right').addEventListener('touchend', (e) => {
     keyboard.RIGHT = false;
   });
-
   document.getElementById('mobile-jump').addEventListener('touchstart', (e) => {
     e.preventDefault();
     keyboard.SPACE = true;
   });
-
   document.getElementById('mobile-jump').addEventListener('touchend', (e) => {
     keyboard.SPACE = false;
   });
-
   document.getElementById('mobile-throw').addEventListener('touchstart', (e) => {
     e.preventDefault();
     keyboard.D = true;
   });
-
   document.getElementById('mobile-throw').addEventListener('touchend', (e) => {
     keyboard.D = false;
   });
-
 }
 

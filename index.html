@@ -53,7 +53,7 @@
       <img id="start-img" class="" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
       <canvas id="canvas" width="720" height="480" class="d-none fullscreen-element"></canvas>
       <!-- CONTROLS  -->
-      <div id="control-screen">
+      <div id="control-screen" class="screen">
         <div id="close-controls" class="game-buttons" onclick="hideControls()"><i class="fa-solid fa-xmark"></i></div>
         <table>
           <tr>
@@ -73,6 +73,16 @@
             <td class="reaction"><span>Throw A Bottle</span></td>
           </tr>
         </table>
+      </div>
+      <div id="story-screen" class="screen">
+        <div id="close-story" class="game-buttons" onclick="hideStory()"><i class="fa-solid fa-xmark"></i></div>
+        <h2>The Story</h2>
+        <div id="story-box">
+          Young Pepe moves out into the wide world for discovering and finding out his true purpose in life. 
+          On his journey he'll meet a lot of creatures - both friendly and hostile - that will shape his destiny. 
+          Will he also meet the giant mystical <span>Pollo Loco</span> that rarely has been seen by brave travelers yet?
+          But be prepared: The sagas say that it needs at least <span>Five Bottles</span> of Magic Salsa to defeat the legendary beast.
+        </div>
       </div>
       <div id="game-buttons">
         <div id="mute-music-button" class="game-buttons" onclick="muteMusic()"><i id="mute-music"

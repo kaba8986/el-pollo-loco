@@ -1,3 +1,4 @@
+//Global Variables
 let mutedSounds = false;
 let mutedMusic = false;
 let mutedEndboss = false;
@@ -5,17 +6,28 @@ let paused = false;
 intervalIds = [];
 
 
+/**
+ * Reloads Page
+ */
 function init() {
   location.reload();
 }
 
 
+/**
+ * Creates Intervals and push them in an array
+ * @param {function} fn 
+ * @param {number} time 
+ */
 function setStoppableInterval(fn, time) {
   let id = setInterval(fn, time);
   intervalIds.push(id);
 }
 
 
+/**
+ * Starts the game - adding and removing displays
+ */
 function startGame() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
@@ -25,18 +37,22 @@ function startGame() {
     document.getElementById('mobile-buttons').style.display = 'flex';
     document.getElementById('canvas').classList.remove('d-none');
     document.getElementById('end-screen').style.left = '100%';
-    // document.getElementById('total-points').classList.remove('d-none');
-    // document.getElementById('total-bottles').style.display = 'flex';
     setMobileBtnControl();
 }
 
 
+/**
+ * Shows Controls by click
+ */
 function showControls() {
   document.getElementById('control-screen').style.display = 'flex';
   document.getElementById('layer').classList.remove('d-none');
 }
 
 
+/**
+ * Hides Controls by click
+ */
 function hideControls() {
   document.getElementById('control-screen').style.display = 'none';
   if(!paused) {
@@ -45,7 +61,21 @@ function hideControls() {
 }
 
 
+function showStory() {
+  document.getElementById('story-screen').style.display = 'flex';
+  document.getElementById('layer').classList.remove('d-none');
+}
 
+
+function hideStory() {
+  document.getElementById('story-screen').style.display = 'none';
+  document.getElementById('layer').classList.add('d-none');
+}
+
+
+/**
+ * Toggle Fullscreen, executing openFullscreen and exitFullscreen
+ */
 function fullscreen() {
   let isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
       (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
@@ -61,6 +91,10 @@ function fullscreen() {
 }
 
 
+/**
+ * Open Fullscreen Mode
+ * @param {string} docElm 
+ */
 function openFullscreen(docElm) {
   document.getElementById('canvas').classList.add('style-fullscreen');
   if (docElm.requestFullscreen) {
@@ -74,6 +108,10 @@ function openFullscreen(docElm) {
   }
 }
 
+
+/**
+ * Exit Fullscreen Mode
+ */
 function exitFullscreen() {
   document.getElementById('canvas').classList.remove('style-fullscreen');
   if (document.exitFullscreen) {
@@ -89,7 +127,9 @@ function exitFullscreen() {
 
 
 
-
+/**
+ * Sets Variable, if mute sound is clicked and changes icon
+ */
 function muteSounds() {
   if(mutedSounds) {
     mutedSounds = false;
@@ -101,6 +141,9 @@ function muteSounds() {
 }
 
 
+/**
+ * Sets Variable, if mute music is clicked and changes icon
+ */
 function muteMusic() {
   if(mutedMusic) {
     mutedMusic = false;
@@ -112,10 +155,12 @@ function muteMusic() {
   document.getElementById('slash').classList.toggle('d-none');
   document.getElementById('slash').classList.toggle('fa-solid');
   document.getElementById('slash').classList.toggle('fa-slash');
-  
 }
 
 
+/**
+ * Sets Variable, if pause is clicked and changes icon
+ */
 function pauseGame() {
   if(paused) {
     paused = false;

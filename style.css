@@ -229,16 +229,18 @@ body {
 
 /**** Controls ***/
 
-#control-screen {
+.screen {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: none;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  gap: 20px;
   font-size: 22px;
+  text-align: justify;
   width: 70%;
   padding: 15px;
   border: 3px solid rgb(78, 38, 15);
@@ -248,6 +250,28 @@ body {
 }
 
 #close-controls {
+  align-self: flex-end;
+  font-size: 16px;
+}
+
+#story-screen {
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  justify-content: flex-start;
+
+  overflow-y: scroll;
+}
+
+
+#story-screen span,
+#story-screen h2 {
+  color: rgb(165, 33, 0);
+  font-weight: 900;
+}
+
+
+#close-story {
   align-self: flex-end;
   font-size: 16px;
 }
@@ -416,6 +440,7 @@ hr {
     padding: 8px 15px;
     margin: 0 2px;
     font-size: 16px;
+    border: 2px solid rgb(78, 38, 15);
   }
 
   .game-buttons {
@@ -470,14 +495,23 @@ hr {
   body {
     padding-bottom: 50px;
   }
+
+  .screen {
+    font-size: 20px;
+    padding: 10px 20px;
+    gap: 15px;
+  }
+
+  #story-screen {
+    border-radius: 0px;
+  }
 }
 
 @media only screen and (max-width: 500px) {
 
-  #control-screen {
+  .screen {
     height: 100%;
     width: 100%;
-    justify-content: center;
 }
 
   table {
@@ -507,8 +541,18 @@ hr {
 
 
 @media only screen and (max-width: 430px) {
-  #control-screen {
+  .screen {
     font-size: 18px;
+    padding: 10px 20px;
+    gap: 0px;
+  }
+
+  #story-screen {
+    padding: 20px;
+  }
+
+  #story-screen h2 {
+    margin-bottom: 10px;
   }
 
   table {
