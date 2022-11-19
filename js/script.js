@@ -45,24 +45,45 @@ function hideControls() {
 }
 
 
-function openFullscreen() {
-  let elem = document.getElementById('container');
 
+function fullscreen() {
+  let isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+      (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+      (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+      (document.msFullscreenElement && document.msFullscreenElement !== null);
+
+  let docElm = document.getElementById('container');
+  if (!isInFullScreen) {
+    openFullscreen(docElm);
+  } else {
+    exitFullscreen(docElm);
+  }
+}
+
+
+function openFullscreen(docElm) {
   document.getElementById('canvas').classList.add('style-fullscreen');
+  if (docElm.requestFullscreen) {
+      docElm.requestFullscreen();
+  } else if (docElm.mozRequestFullScreen) {
+      docElm.mozRequestFullScreen();
+  } else if (docElm.webkitRequestFullScreen) {
+      docElm.webkitRequestFullScreen();
+  } else if (docElm.msRequestFullscreen) {
+      docElm.msRequestFullscreen();
+  }
+}
 
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) {
-    // Firefox
-    elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) {
-    // Chrome, Safari and Opera
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) {
-    // IE/Edge
-    elem.msRequestFullscreen();
-  } else if (elem.webkitEnterFullScreen) {
-    elem.webkitEnterFullScreen();
+function exitFullscreen() {
+  document.getElementById('canvas').classList.remove('style-fullscreen');
+  if (document.exitFullscreen) {
+      document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+  } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
   }
 }
 
@@ -107,5 +128,3 @@ function pauseGame() {
   document.getElementById('layer').classList.toggle('d-none');
   document.getElementById('pause-title').classList.toggle('d-none');
 }
-
-
