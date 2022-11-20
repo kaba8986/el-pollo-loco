@@ -41,6 +41,7 @@ class ThrowableObject extends MovableObject {
     this.checkSplash();
   }
 
+  
   throw() {
     world.playSound(this.throwing_sound, 0.4);
     this.speedY = 20; 

@@ -76,7 +76,6 @@ class Endboss extends MovableObject {
 
 
   animate() {
-    //Bilder wechseln
     setInterval(() => {
       if(!paused) {
         if(this.isHurt()) {
@@ -85,6 +84,7 @@ class Endboss extends MovableObject {
           this.playAnimation(this.IMAGES_WALKING);
           this.moveLeft();
         } else if(!this.energy && !this.dead) {
+          this.dieEndboss();
           this.playAnimation(this.IMAGES_DEAD);
           this.dead = true;
         } else if (this.dead) {

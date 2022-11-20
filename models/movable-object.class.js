@@ -8,72 +8,85 @@ class MovableObject extends DrawableObject {
   dead = false;
 
 
+  /**
+   * Simulates Gravity
+   */
   applyGravity() {
     setInterval(() => {
-      if (this.isAboveGround() || this.speedY > 0 ) {
+      if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
     }, 1000 / 25)
   }
 
+
+  /**
+   * Checks if Object is above Ground
+   * @returns boolean
+   */
   isAboveGround() {
     if ((this instanceof ThrowableObject)) { // Throwable Object should ALWAYS fall
       return this.y < 360;
     }
-      return this.y < 160;
+    return this.y < 160;
   }
 
 
-  //Formel zur Kollisionsberechnung - z.B. character.isCollidiing(chicken)
-
-  
-
-  /*
+  /**
+   * Checks if objects are colliding
+   * @param {Object} obj 
+   * @returns boolean
+   */
   isColliding(obj) {
-    if(obj instanceof Coin || obj instanceof Bottle) {
-      return this.x + this.width > obj.x &&
-      this.y + this.height > obj.y &&
-      this.x < obj.x &&
-      this.y + 110 < obj.y + obj.height; //Subtract Part of Characters "empty" height
-    } else {
-      return this.x + this.width > obj.x &&
-      this.y + this.height > obj.y &&
-      this.x < obj.x + obj.width &&
-      this.y < obj.y + obj.height;
-    }
-  }
-  */
-
-  isColliding(obj) {
-      return this.rightBorder() > obj.leftBorder() &&
+    return this.rightBorder() > obj.leftBorder() &&
       this.bottomBorder() > obj.topBorder() &&
       this.leftBorder() < obj.rightBorder() &&
       this.topBorder() < obj.bottomBorder();
   }
 
 
-
+  /**
+   * Creates Top Border of Object
+   * @returns number
+   */
   topBorder() {
     return this.y + this.offset.top;
   }
 
+
+  /**
+   * Creates Right Border of Object
+   * @returns number
+   */
   rightBorder() {
     return this.x + this.width - this.offset.right;
   }
 
+
+  /**
+   * Creates Bottom Border of Object
+   * @returns number
+   */
   bottomBorder() {
     return this.y + this.height - this.offset.bottom;
   }
 
+
+  /**
+   * Creates Left Border of Object
+   * @returns number
+   */
   leftBorder() {
     return this.x + this.offset.left;
   }
 
 
-
+  /**
+   * Hits Object and reduces energy
+   */
   hit() {
-    if(this instanceof Character) {
+    if (this instanceof Character) {
       this.energy -= 5;
       this.resetIdleCount();
     } else {
@@ -86,7 +99,10 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  //Pepe leaves display when killed
+
+  /**
+   * Moves Object out of screen
+   */
   dieCharacter() {
     setInterval(() => {
       this.y += 10;
@@ -94,17 +110,29 @@ class MovableObject extends DrawableObject {
   }
 
 
+  /**
+   * Checks distance to last hit
+   * @returns boolean
+   */
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit; // difference in ms
     return timePassed < 1000;
   }
 
 
+  /**
+   * Checks if Object is dead
+   * @returns boolean
+   */
   isDead() {
     return this.energy == 0;
   }
 
 
+  /**
+   * Copys images from array into cache
+   * @param {Array} images 
+   */
   playAnimation(images) {
     //Walk animation - Bilder durchiterieren
     let i = this.currentImage % images.length;
@@ -114,26 +142,72 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
+
+  /**
+   * Move Object right
+   */
   moveRight() {
     this.x += this.speed;
     this.otherDirection = false;
   }
 
+
+  /**
+   * Move Object left
+   */
   moveLeft() {
     this.x -= this.speed;
   }
 
+
+  /**
+   * Let Object jump
+   */
   jump() {
     this.speedY = 30;
   }
 
+
+  /**
+   * Minimalizes Object
+   */
   removeObject() {
     this.width = 0;
     this.height = 0;
   }
 
+
+  /**
+   * Returns distance between two Objects
+   * @param {Object} obj 
+   * @returns number
+   */
   distanceTo(obj) {
-    return this.x -  obj.x;
+    return this.x - obj.x;
   }
 
+
+  /**
+   * Check if Chicken is alive - if yes, let chicken walk, if not, let chicken die
+   */
+  checkIfIsAlive() {
+    if (this.isDead() && !this.played) {
+      this.playAnimationDead();
+    } else {
+      this.playAnimation(this.IMAGES_WALKING);
+      this.moveChickenLeft();
+    }
+  }
+
+
+/**
+ * Minimalizes Object
+ */
+  removeObject() {
+    setTimeout(() => {
+      this.played = true;
+      this.width = 0;
+      this.height = 0;
+    }, 1500);
+  }
 }

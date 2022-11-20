@@ -31,42 +31,38 @@ class Chicken extends MovableObject {
     super().loadImage('./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png')
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEAD);
-
     this.x = 400 + Math.random() * 3800; 
-    this.speed = 0.15 + Math.random()*1.2;
-
+    this.speed = 0.3 + Math.random()*1.5;
     this.animate();
   }
 
+  /**
+   * Animate Chicken
+   */
   animate() {
-    //Hühner laufen
-
-    setStoppableInterval(()=> {
-      if(!paused) {
-        if(!this.isDead()) {
-          this.moveLeft();
-      }
-      }
-    }, 1000 / 60);
-
-   
-    //Bilder wechseln
+    setStoppableInterval(() => {this.moveChickenLeft()}, 1000/60);
     setStoppableInterval(() => {
       if(!paused) {
-        if(this.isDead() && !this.played) {
-          world.playSound(this.kill_sound, 0.5);
-          this.playAnimation(this.IMAGES_DEAD);
-          setTimeout(() => {
-            this.width = 0;
-            this.height = 0;
-            this.played = true;
-          }, 1500);
-        } else {
-          this.playAnimation(this.IMAGES_WALKING);
-        }
+        this.checkIfIsAlive();
       }
-    }, 100)
+    }, 100);
+  }
+
+  
+  //Play Animation for Dead
+  playAnimationDead() {
+    world.playSound(this.kill_sound, 0.3);
+    this.playAnimation(this.IMAGES_DEAD);
+    this.removeObject();
   }
 
 
+  //Move Chicken left
+  moveChickenLeft() {
+    if(!paused) {
+      if(!this.isDead()) {
+        this.moveLeft();
+      }
+    }
+  }
 }

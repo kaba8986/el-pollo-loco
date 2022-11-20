@@ -6,8 +6,6 @@ class StatusBarCoin extends DrawableObject {
   ];
 
   coins = 0;
-
-
   percentage = 0;
 
   constructor() {

@@ -5,7 +5,6 @@ class Cloud extends MovableObject {
 
   constructor(x, y) {
     super().loadImage('./img/5_background/layers/4_clouds/1.png');
-
     this.width = 370 + Math.random()*150;
     this.height = 270 + Math.random()*150;
     this.x = x;
@@ -13,6 +12,10 @@ class Cloud extends MovableObject {
     this.animate();
   }
 
+
+  /**
+   * Animate Cloud
+   */
   animate() {
     setStoppableInterval(() => {
       if(!paused) {
@@ -20,5 +23,4 @@ class Cloud extends MovableObject {
       }
     }, 1000/60);
   }
-
 }

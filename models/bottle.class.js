@@ -20,24 +20,14 @@ class Bottle extends MovableObject {
 
         this.x = x;
         this.y = y;
-
-        /*  
-        super().loadImage(this.randomizeDirection());
-        
-        this.y = 370;
-        this.x = 200 + Math.random()*1800;
-        //this.distanceToNext();
-        */
     }
 
-    randomizeDirection() {
-        let random = Math.round(Math.random());
-        return this.IMAGES[random];
-    }
-
+    /**
+     * Set direction of Bottle - Choose between two images
+     * @param {number} dir 
+     * @returns boolean
+     */
     setDirection(dir) {
         return dir == 0 ? this.IMAGES[0] : this.IMAGES[1];
     }
-
-
 }

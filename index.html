@@ -33,140 +33,115 @@
 
 <body>
   <!-- MAIN-SCREEN GAME  -->
-
-    <div id="container" class="fullscreen-element">
-      <div id="main-buttons">
-        <div class="main-buttons">
-          <button id="start-game" onclick="startGame()">Start Game</button>
-          <button id="main-controls" onclick="showControls()">Controls</button>
-          <button id="game-story" onclick="showStory()">Story</button>
-        </div>
-        <!-- <button id="back" class="d-none" onclick="goBack()">Back</button> -->
-      </div>
-      <div id="footline">
-        <a
-          href="https://www.freepik.com/free-vector/empty-desert-forest-landscape-sunset-time-scene_15951483.htm#query=desert%20cartoon&position=15&from_view=search&track=sph">Image
-          by brgfx </a><span>on Freepik</span>
-      </div>
-      <div id="layer" class="d-none"></div>
-      <div id="pause-title" class="d-none">PAUSE</div>
-      <img id="start-img" class="" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
-      <canvas id="canvas" width="720" height="480" class="d-none fullscreen-element"></canvas>
-      <!-- CONTROLS  -->
-      <div id="control-screen" class="screen">
-        <div id="close-controls" class="game-buttons" onclick="hideControls()"><i class="fa-solid fa-xmark"></i></div>
-        <table>
-          <tr>
-            <td class="key"><i class="fa-solid fa-arrow-left"></i></td>
-            <td class="reaction"><span>Move Character Left</span></td>
-          </tr>
-          <tr>
-            <td class="key"><i class="fa-solid fa-arrow-right"></i></td>
-            <td class="reaction"><span>Move Character Right</span></td>
-          </tr>
-          <tr>
-            <td class="key"><b>SPACE</b></td>
-            <td class="reaction"><span>Let Character Jump</span></td>
-          </tr>
-          <tr>
-            <td class="key"><b>D</b></td>
-            <td class="reaction"><span>Throw A Bottle</span></td>
-          </tr>
-        </table>
-      </div>
-      <div id="story-screen" class="screen">
-        <div id="close-story" class="game-buttons" onclick="hideStory()"><i class="fa-solid fa-xmark"></i></div>
-        <h2>The Story</h2>
-        <div id="story-box">
-          Young Pepe moves out into the wide world for discovering and finding out his true purpose in life. 
-          On his journey he'll meet a lot of creatures - both friendly and hostile - that will shape his destiny. 
-          Will he also meet the giant mystical <span>Pollo Loco</span> that rarely has been seen by brave travelers yet?
-          But be prepared: The sagas say that it needs at least <span>Five Bottles</span> of Magic Salsa to defeat the legendary beast.
-        </div>
-      </div>
-      <div id="game-buttons">
-        <div id="mute-music-button" class="game-buttons" onclick="muteMusic()"><i id="mute-music"
-            class="fa-solid fa-music"></i><i id="slash" class="d-none"></i></div>
-        <div><i id="mute-sounds" class="fa-solid fa-volume-low game-buttons" onclick="muteSounds()"></i></div>
-        <div><i id="pause-game" class="fa-solid fa-pause game-buttons" onclick="pauseGame()"></i></div>
-        <div id="quick-controls" class="game-buttons"><i class="fa-solid fa-gamepad" onclick="showControls()"></i></div>
-        <div class="game-buttons"><i id="full-screen" class="fa-solid fa-expand" onclick="fullscreen()"></i></div>
-      </div>
-      <!-- <div id="total-points" class="d-none">
-        <div id="point-counter">0</div>
-        <div id="added-points"></div>
-      </div>
-      <div id="total-bottles">
-        <img src="img/6_salsa_bottle/salsa_bottle.png" alt="">
-        <div id="bottle-counter">x 0</div>
-      </div> -->
-      <div id="mobile-buttons">
-        <div id="mobile-walk-buttons">
-          <div id="mobile-left" class="game-buttons"><i class="fa-solid fa-chevron-left"></i></div>
-          <div id="mobile-right" class="game-buttons"><i class="fa-solid fa-chevron-right"></i></div>
-        </div>
-        <div id="mobile-action-buttons">
-          <div id="mobile-jump" class="game-buttons"><i class="fa-solid fa-chevron-up"></i></div>
-          <div id="mobile-throw" class="game-buttons"><i class="fa-solid fa-crosshairs"></i></div>
-        </div>
-      </div>
-      <div id="end-screen">
-        <div id="end-screen-content">
-          <h2 id="winner-display">You Loose!</h2>
-          <div id="stats">
-            <div class="statline">
-              <span class="label">Collected Coins: </span>
-              <span id="endgame-coins">12</span>
-            </div>
-            <div class="statline">
-              <span class="label">Saved Bottles: </span>
-              <span id="endgame-bottles">12</span>
-            </div>
-            <div class="statline">
-              <span class="label">Killed Enemies: </span>
-              <span id="endgame-totalkill">18</span>
-            </div>
-            <div id="overview" class="statline">
-                <div class="kills">
-                  <span class="label">Chicken: </span>
-                  <span id="killed-chicken">0</span>
-                </div>
-                <div class="kills">
-                  <span class="label">Small Chicken: </span>
-                  <span id="killed-small-chicken">0</span>
-                </div>
-                <div class="kills">
-                  <span class="label">Endboss: </span>
-                  <span id="killed-endboss">0</span>
-                </div>
-            </div>
-            <hr>
-            <div class="statline">
-              <span class="label">Total Points: </span>
-              <span id="endgame-points">23 000</span>
-            </div>
-          </div>
-          <button id="restart-game" class="game-buttons" onclick="init()">Menu</button>
-        </div>
+  <div id="container" class="fullscreen-element">
+    <div id="main-buttons">
+      <div class="main-buttons">
+        <button id="start-game" onclick="startGame()">Start Game</button>
+        <button id="main-controls" onclick="showControls()">Controls</button>
+        <button id="game-story" onclick="showStory()">Story</button>
       </div>
     </div>
-
-
-
-
-  <!-- <img src="img\2_character_pepe\2_walk\W-21.png" width="50px" height="150px"> -->
+    <div id="footline">
+      <a
+        href="https://www.freepik.com/free-vector/empty-desert-forest-landscape-sunset-time-scene_15951483.htm#query=desert%20cartoon&position=15&from_view=search&track=sph">Image
+        by brgfx </a><span>on Freepik</span>
+    </div>
+    <div id="layer" class="d-none"></div>
+    <div id="pause-title" class="d-none">PAUSE</div>
+    <img id="start-img" class="" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+    <canvas id="canvas" width="720" height="480" class="d-none fullscreen-element"></canvas>
+    <!---------- CONTROLS  ----------->
+    <div id="control-screen" class="screen">
+      <div id="close-controls" class="game-buttons" onclick="hideControls()"><i class="fa-solid fa-xmark"></i></div>
+      <table>
+        <tr>
+          <td class="key"><i class="fa-solid fa-arrow-left"></i></td>
+          <td class="reaction"><span>Move Character Left</span></td>
+        </tr>
+        <tr>
+          <td class="key"><i class="fa-solid fa-arrow-right"></i></td>
+          <td class="reaction"><span>Move Character Right</span></td>
+        </tr>
+        <tr>
+          <td class="key"><b>SPACE</b></td>
+          <td class="reaction"><span>Let Character Jump</span></td>
+        </tr>
+        <tr>
+          <td class="key"><b>D</b></td>
+          <td class="reaction"><span>Throw A Bottle</span></td>
+        </tr>
+      </table>
+    </div>
+    <!---------- STORY  ----------->
+    <div id="story-screen" class="screen">
+      <div id="close-story" class="game-buttons" onclick="hideStory()"><i class="fa-solid fa-xmark"></i></div>
+      <h2>The Story</h2>
+      <div id="story-box">
+        Young Pepe moves out into the wide world for discovering and finding out his true purpose in life.
+        On his journey he'll meet a lot of creatures - both friendly and hostile - that will shape his destiny.
+        Will he also meet the giant mystical <span>Pollo Loco</span> that rarely has been seen by brave travelers yet?
+        But be prepared: The sagas say that it needs at least <span>Five Bottles</span> of Magic Salsa to defeat the
+        legendary beast.
+      </div>
+    </div>
+    <div id="game-buttons">
+      <div id="mute-music-button" class="game-buttons" onclick="muteMusic()"><i id="mute-music"
+          class="fa-solid fa-music"></i><i id="slash" class="d-none"></i></div>
+      <div><i id="mute-sounds" class="fa-solid fa-volume-low game-buttons" onclick="muteSounds()"></i></div>
+      <div><i id="pause-game" class="fa-solid fa-pause game-buttons" onclick="pauseGame()"></i></div>
+      <div id="quick-controls" class="game-buttons"><i class="fa-solid fa-gamepad" onclick="showControls()"></i></div>
+      <div class="game-buttons"><i id="full-screen" class="fa-solid fa-expand" onclick="fullscreen()"></i></div>
+    </div>
+    <div id="mobile-buttons">
+      <div id="mobile-walk-buttons">
+        <div id="mobile-left" class="game-buttons"><i class="fa-solid fa-chevron-left"></i></div>
+        <div id="mobile-right" class="game-buttons"><i class="fa-solid fa-chevron-right"></i></div>
+      </div>
+      <div id="mobile-action-buttons">
+        <div id="mobile-jump" class="game-buttons"><i class="fa-solid fa-chevron-up"></i></div>
+        <div id="mobile-throw" class="game-buttons"><i class="fa-solid fa-crosshairs"></i></div>
+      </div>
+    </div>
+    <div id="end-screen">
+      <div id="end-screen-content">
+        <h2 id="winner-display">You Loose!</h2>
+        <div id="stats">
+          <div class="statline">
+            <span class="label">Collected Coins: </span>
+            <span id="endgame-coins">12</span>
+          </div>
+          <div class="statline">
+            <span class="label">Saved Bottles: </span>
+            <span id="endgame-bottles">12</span>
+          </div>
+          <div class="statline">
+            <span class="label">Killed Enemies: </span>
+            <span id="endgame-totalkill">18</span>
+          </div>
+          <div id="overview" class="statline">
+            <div class="kills">
+              <span class="label">Chicken: </span>
+              <span id="killed-chicken">0</span>
+            </div>
+            <div class="kills">
+              <span class="label">Small Chicken: </span>
+              <span id="killed-small-chicken">0</span>
+            </div>
+            <div class="kills">
+              <span class="label">Endboss: </span>
+              <span id="killed-endboss">0</span>
+            </div>
+          </div>
+          <hr>
+          <div class="statline">
+            <span class="label">Total Points: </span>
+            <span id="endgame-points">23 000</span>
+          </div>
+        </div>
+        <button id="restart-game" class="game-buttons" onclick="init()">Menu</button>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
-
-
-
-
-<!-- 
-  Todo Junus
-
-- Musik und Sounds
-- Game-Over-Screen
-
-
--->

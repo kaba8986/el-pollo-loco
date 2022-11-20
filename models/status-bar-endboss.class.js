@@ -19,26 +19,55 @@ class StatusBarEndboss extends DrawableObject {
     this.showBar();
   }
 
+
+  /**
+   * Shows and hides EnbossBar when character gets close to Endboss
+   */
   showBar() {
     setInterval(() => {
       if(world.endboss.distanceTo(world.character) < 800) {
-        world.statusBarBottle.y = 100;
-        world.statusBarCoin.y = 170;
-        this.width = 180;
+        this.showEndbossBar();
       } else {
-        this.width = 0;
-        world.statusBarBottle.y = 60;
-        world.statusBarCoin.y = 130;
+        this.removeEndbossBar();
       }
     }, 200);
   }
 
+
+  /**
+   * Shows EndbossBar
+   */
+  showEndbossBar() {
+    world.statusBarBottle.y = 100;
+    world.statusBarCoin.y = 170;
+    this.width = 180;
+  }
+
+  /**
+   * Removes EndbossBar
+   */
+  removeEndbossBar() {
+    this.width = 0;
+    world.statusBarBottle.y = 60;
+    world.statusBarCoin.y = 130;
+  }
+
+
+  /**
+   * Chooes image from image cache
+   * @param {number} percentage 
+   */
   setPercentage(percentage) {
     this.percentage = percentage; // => 0 ... 2
     let path = this.IMAGES[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
+
+  /**
+   * Returns index by reading percentage
+   * @returns number
+   */
   resolveImageIndex() {
     if (this.percentage > 80) {
       return 0;

@@ -20,22 +20,18 @@ class Coin extends MovableObject {
         this.loadImages(this.IMAGES);
         this.x = x;
         this.y = y;
-        
-        /*
-        this.y = 120 + Math.random()*200;
-        this.x = 200 + Math.random()*1800;
-        */
-
         this.animate();
     }
 
+
+    /**
+     * Animate Coin Blinking
+     */
     animate() {
         setStoppableInterval(() => {
             if(!paused) {
                 this.playAnimation(this.IMAGES);
             }
         }, 400)
-    }
-
-    
+    } 
 }

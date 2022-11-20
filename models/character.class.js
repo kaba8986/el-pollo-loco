@@ -132,19 +132,28 @@ class Character extends MovableObject {
    */
   playCharacterAnimations() {
     if (!paused) {
+      this.checkIfCharacterRests();
       if (this.isDead()) {
         this.playAnimationDead();
       } else if (this.isHurt()) {
         this.playAnimationHurt();
       } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMPING);
-      } else if (this.isAsleep()) {
-        this.playAnimation(this.ITEMS_IDLE_LONG);
-      } else if (this.isNodding()) {
-        this.playAnimation(this.ITEMS_IDLE);
       } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
         this.playAnimation(this.IMAGES_WALKING);
       }
+    }
+  }
+
+
+  /**
+   * Checks if character rests and execute animations
+   */
+  checkIfCharacterRests() {
+    if (this.isAsleep()) {
+      this.playAnimation(this.ITEMS_IDLE_LONG);
+    } else if (this.isNodding()) {
+      this.playAnimation(this.ITEMS_IDLE);
     }
   }
 
