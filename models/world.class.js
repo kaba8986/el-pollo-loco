@@ -49,29 +49,28 @@ class World {
 
   run() {
     setStoppableInterval(() => {
-      this.checkCollisions();
-      this.checkCollisionBottle();
-      this.checkThrowObjects();
-      this.fadeInMusic();
-      this.fadeOutMusic();
-      this.checkMute();
-      this.checkPaused();
-    }, 200);
-
-    setInterval(() => {
-      this.checkCoinHarvest();
-      this.checkBottleHarvest();
-    }, 1000 / 100);
-
+      this.checkGameCollisions();
+      this.controllAllSounds();
+    }, 100);
 
     setInterval(() => {
       this.checkJumpOnEnemy();
     }, 50);
 
     this.levelMusic.loop = true;
-    this.playSound(this.levelMusic, 1);
+    this.playMusic(this.levelMusic, 0.8);
   }
 
+
+  //COLLIDING FUNCTIONS
+  checkGameCollisions() {
+    this.checkCollisions();
+    this.checkCollisionBottle();
+    this.checkThrowObjects();
+    this.checkCoinHarvest();
+    this.checkBottleHarvest();
+    this.checkHeartHarvest();
+  }
 
   /**
    * Check if character collides with enemy - if yes, execute hit-function and set new bar-image
@@ -80,7 +79,6 @@ class World {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.energy && !paused) {
         this.character.hit();
-        // this.loosePoints();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
     });
@@ -100,31 +98,33 @@ class World {
   }
 
 
+  //COLLECTING BOTTLES & COINS
+  isCollectable(obj) {
+    return this.character.isColliding(obj) && obj.width != 0 && obj.height != 0;
+  }
 
   /**
    * Check collision with coins - if yes, play sound and execute collecting-function
    */
   checkCoinHarvest() {
     this.level.coins.forEach((coin) => {
-      if (this.character.isColliding(coin) && coin.width != 0 && coin.height != 0) {
+      if (this.isCollectable(coin)) {
         this.collectCoin(coin);
-        // this.statusBarCoin.setPercentage(this.coinCounter);
-        this.playSound(this.coinSound, 0.5);
+        this.playStoppableSound(this.coinSound, 0.5);
       }
     })
   }
 
 
   /**
-   * Collecting Coins - Adding to counter and resize them to null
+   * Collecting Coins
    * @param {Object} coin 
    */
   collectCoin(coin) {
     this.statusBarCoin.coins++;
     this.points += 1000;
     this.showAddedPoints(1000);
-    coin.width = 0;
-    coin.height = 0;
+    coin.removeObject();
   }
 
 
@@ -133,17 +133,16 @@ class World {
    */
   checkBottleHarvest() {
     this.level.bottles.forEach((bottle) => {
-      if (this.character.isColliding(bottle) && bottle.width != 0 && bottle.height != 0) {
+      if (this.isCollectable(bottle)) {
         this.collectBottle(bottle);
-        // this.statusBarBottle.setPercentage(this.bottleCounter);
-        this.playSound(this.bottleSound, 0.5);
+        this.playStoppableSound(this.bottleSound, 0.5);
       }
     })
   }
 
 
   /**
-   * Collecting Bottles - Adding to counter and resize them to null
+   * Collecting Bottles
    * @param {Object} bottle 
    */
   collectBottle(bottle) {
@@ -151,28 +150,73 @@ class World {
     this.collectedBottles++;
     this.points += 200;
     this.showAddedPoints(200);
-    bottle.width = 0;
-    bottle.height = 0;
+    bottle.removeObject();
   }
 
 
+  /**
+   * Check collision with collectable hearts - if yes, play sound and execute collecting-function
+   */
+  checkHeartHarvest() {
+    this.level.hearts.forEach((heart) => {
+      if (this.isCollectable(heart)) {
+        this.collectHeart(heart);
+        this.playStoppableSound(this.bottleSound, 0.5);
+      }
+    })
+  }
+
+
+  /**
+   * Collecting Hearts
+   * @param {Object} heart 
+   */
+  collectHeart(heart) {
+    this.character.hearts++;
+    this.character.healCharacter();
+    this.points += 200;
+    this.showAddedPoints(200);
+    heart.removeObject();
+  }
+
+
+
+
+  //THROW BOTTLES
   /**
    * Creates throwable Bottles and put them in an array
    */
   checkThrowObjects() {
     if (this.keyboard.D && this.statusBarBottle.bottles) {
       setTimeout(() => { this.shootable = true; }, 500);
-      if (this.shootable) {
-        let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-        if (this.character.otherDirection) {
-          bottle.speedX *= -1;
-          bottle.x = this.character.x;
-        }
-        this.statusBarBottle.bottles--;
-        this.throwableObjects.push(bottle);
-        this.shootable = false;
-        this.character.resetIdleCount();
-      }
+      this.addBottle();
+    }
+  }
+
+
+  /**
+   * Add bottle to array
+   */
+  addBottle() {
+    if (this.shootable) {
+      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+      this.checkBottleDirection(bottle);
+      this.statusBarBottle.bottles--;
+      this.throwableObjects.push(bottle);
+      this.shootable = false;
+      this.character.resetIdleCount();
+    }
+  }
+
+
+  /**
+   * Check direction of bottle
+   * @param {Object} bottle 
+   */
+  checkBottleDirection(bottle) {
+    if (this.character.otherDirection) {
+      bottle.speedX *= -1;
+      bottle.x = this.character.x;
     }
   }
 
@@ -184,15 +228,25 @@ class World {
     this.level.enemies.forEach((enemy) => {
       this.throwableObjects.forEach((bottle) => {
         if (bottle.isColliding(enemy) && !bottle.splashed) {
-          enemy.hit();
-          this.getPoints(enemy);
-          bottle.enemyHit = true;
-          if (enemy instanceof Endboss) {
-            this.statusBarEndboss.setPercentage(enemy.energy);
-          }
+          this.hitEnemyWithBottle(enemy, bottle);
         }
       })
     })
+  }
+
+
+  /**
+   * Hit Enemy with Bottle
+   * @param {Object} enemy 
+   * @param {Object} bottle 
+   */
+  hitEnemyWithBottle(enemy, bottle) {
+    enemy.hit();
+    this.getPoints(enemy);
+    bottle.enemyHit = true;
+    if (enemy instanceof Endboss) {
+      this.statusBarEndboss.setPercentage(enemy.energy);
+    }
   }
 
 
@@ -213,53 +267,26 @@ class World {
     }
     this.showAddedPoints(amount);
     this.points += amount;
-    console.log(this.points);
   }
 
 
-  /**
-   * Decrease point-counter - limited by once per second
-   */
-  loosePoints() {
-    if (this.loosable) {
-      this.points -= 300;
-      if (this.points <= 0) {
-        this.points = 0;
-      }
-      this.showPoints();
-      this.showAddedPoints(-300);
-      this.loosable = false;
-    }
-    setTimeout(() => {
-      this.loosable = true;
-    }, 1000);
-  }
+  //MUSIC & SOUND FUNCTIONS
 
+  controllAllSounds() {
+    this.checkMute();
+    this.checkPaused();
+    this.fadeMusic();
+  }
 
   /**
    * Check if sound is muted
    */
   checkMute() {
     if (mutedMusic) {
-      this.pauseSound(this.levelMusic);
+      this.pauseMusic(this.levelMusic);
     } else {
-      this.playSound(this.levelMusic, 1);
-      this.fadeInMusic();
-    }
-  }
-
-
-  /**
-   * Play audio-file by given volume
-   * @param {Audio} sound 
-   * @param {number} volume 
-   */
-  playSound(sound, volume) {
-    if (!mutedSounds) {
-      sound.play();
-      sound.volume = volume;
-    } else {
-      this.pauseSound(sound);
+      this.playMusic(this.levelMusic, 1);
+      this.fadeMusic();
     }
   }
 
@@ -268,59 +295,36 @@ class World {
    * Pause audio-file
    * @param {Audio} sound 
    */
-  pauseSound(sound) {
+  pauseMusic(sound) {
     sound.pause();
     // sound.volume = 0;
   }
 
 
+
   /**
-   * Mute running music
+   * Play audio-file by given volume
+   * @param {Audio} sound 
+   * @param {number} volume 
    */
-  muteComplete() {
-    this.pauseSound(this.levelMusic);
-    this.pauseSound(this.endbossMusic);
-    this.pauseSound(this.character.walking_sound);
-    this.pauseSound(this.character.hurt_sound);
-    this.pauseSound(this.character.jump_sound);
+  playMusic(sound, volume) {
+      sound.play();
+      sound.volume = volume;
   }
 
 
   /**
-   * Fade in Boss-Music by checking distance to character
+   * Stoppable Sounds
+   * @param {Audio} sound 
+   * @param {number} volume 
    */
-  fadeInMusic() {
-    setInterval(() => {
-      let dis = this.endboss.distanceTo(this.character);
-      if (mutedMusic || this.gameover || dis > 1200 || this.endboss.isDead()) {
-        this.endbossMusic.volume = 0;
-      } else {
-        if (dis < 1200 && dis > 500 && !paused) {
-          this.endbossMusic.play();
-          let vol = (1200 - dis) / 700;
-          this.endbossMusic.volume = vol;
-        } else if (dis < 500 && !paused) {
-          this.endbossMusic.play();
-          this.endbossMusic.volume = 1;
-        }
-      }
-    }, 200);
-  }
-
-
-  /**
-   * Fade out level Music by checking distance to character
-   */
-  fadeOutMusic() {
-    setInterval(() => {
-      let dis = this.endboss.distanceTo(this.character);
-      if (dis < 1500 && dis > 800) {
-        let vol = 1 - (1500 - dis) / 700;
-        this.levelMusic.volume = vol;
-      } else if (dis < 800) {
-        this.levelMusic.volume = 0;
-      }
-    }, 200);
+  playStoppableSound(sound, volume) {
+    if (!mutedSounds) {
+      sound.play();
+      sound.volume = volume;
+    } else {
+      this.pauseMusic(sound);
+    }
   }
 
 
@@ -329,16 +333,79 @@ class World {
    */
   checkPaused() {
     if (paused) {
-      this.pauseSound(this.levelMusic);
-      this.pauseSound(this.endbossMusic);
+      this.pauseMusic(this.levelMusic);
+      this.pauseMusic(this.endbossMusic);
     } else {
-
-      this.fadeOutMusic();
-      this.fadeInMusic();
+      this.fadeMusic();
     }
   }
 
 
+  /**
+   * Mute running music
+   */
+  muteComplete() {
+    this.pauseMusic(this.levelMusic);
+    this.pauseMusic(this.endbossMusic);
+    this.pauseMusic(this.character.walking_sound);
+    this.pauseMusic(this.character.hurt_sound);
+    this.pauseMusic(this.character.jump_sound);
+  }
+
+
+  //CONTROLLING BALANCE BETWEEN LEVEL AND ENDBOSS-MUSIC
+
+  /**
+   * Fade Music
+   */
+  fadeMusic() {
+    let dis = this.endboss.distanceTo(this.character);
+    this.fadeInMusic(dis);
+    this.fadeOutLevelMusic(dis);
+  }
+
+
+  /**
+   * Fade in Boss-Music by checking distance to character
+   * @param {number} dis 
+   */
+  fadeInMusic(dis) {
+    if (mutedMusic || this.gameover || dis > 1200 || this.endboss.isDead()) {
+      this.endbossMusic.volume = 0;
+    } else {
+      this.fadeInEndbossMusic(dis);
+    }
+  }
+
+
+  /**
+   * Set Volume for Endboss-Music
+   * @param {number} dis 
+   */
+  fadeInEndbossMusic(dis) {
+    if (dis < 1200 && dis > 500 && !paused) {
+      let vol = (1200 - dis) / 700;
+      this.playMusic(this.endbossMusic, vol);
+    } else if (dis < 500 && !paused) {
+      this.playMusic(this.endbossMusic, 1);
+    }
+  }
+
+
+  /**
+   * Fade Out Level Music
+   */
+  fadeOutLevelMusic(dis) {
+    if (dis < 1500 && dis > 800) {
+      let vol = 1 - (1500 - dis) / 700;
+      this.levelMusic.volume = vol;
+    } else if (dis < 800) {
+      this.levelMusic.volume = 0;
+    }
+  }
+
+
+  //DRAWING FUNCTIONS
   /**
    * Drawing elements on canvas-context
    */
@@ -355,12 +422,18 @@ class World {
   }
 
 
+  /**
+   * Draw Static Elements
+   */
   drawStaticElements() {
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarEndboss);
   }
 
 
+  /**
+   * Draw Collectable Elements
+   */
   drawCollectableElements() {
     this.addToMap(this.statusBarCoin);
     this.addToMap(this.statusBarBottle);
@@ -371,6 +444,9 @@ class World {
   }
 
 
+  /**
+   * Draw Counter Elements
+   */
   drawCounters() {
     this.ctx.fillStyle = 'white';
     this.ctx.textAlign = 'left';
@@ -379,12 +455,19 @@ class World {
   }
 
 
+  /**
+   * Draw Point Count
+   */
   drawPoints() {
     this.ctx.textAlign = 'right';
     this.ctx.fillStyle = 'gold';
     this.ctx.fillText(this.points, 705, this.statusBarBottle.y + 45);
   }
 
+
+  /**
+   * Draw Added Points
+   */
   drawAddedPoints() {
     this.ctx.font = '20px Arial';
     this.ctx.textAlign = 'right';
@@ -393,6 +476,9 @@ class World {
   }
 
 
+  /**
+   * Draw Movable Elements
+   */
   drawMovableElements() {
     this.ctx.translate(this.camera_x, 0);
     this.drawBackgroundElements();
@@ -401,6 +487,9 @@ class World {
   }
 
 
+  /**
+   * Draw Background Elements
+   */
   drawBackgroundElements() {
     //Background Elements
     this.addObjectsToMap(this.level.backgroundObjects);
@@ -408,12 +497,16 @@ class World {
   }
 
 
+  /**
+   * Draw Front Elements
+   */
   drawFrontElements() {
     //Front Elements
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
+    this.addObjectsToMap(this.level.hearts);
     this.addObjectsToMap(this.throwableObjects);
   }
 
@@ -437,11 +530,7 @@ class World {
     if (mo.otherDirection) {
       this.flipImage(mo);
     }
-
     mo.draw(this.ctx);
-    // mo.drawFrame(this.ctx);
-    // mo.drawBorder(this.ctx);
-
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
@@ -456,8 +545,7 @@ class World {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
     this.ctx.scale(-1, 1);
-    //X-Koordinate muss negiert werdern weil jetzt von rechts gezählt wird
-    mo.x = mo.x * -1;
+    mo.x = mo.x * -1; //x-value gets turned
   }
 
 
@@ -466,9 +554,8 @@ class World {
    * @param {Movable Object} mo 
    */
   flipImageBack(mo) {
-    //X-Koordinate wird wieder negiert
     mo.x = mo.x * -1;
-    this.ctx.restore();
+    this.ctx.restore(); //x-value gets turned again
   }
 
 
@@ -503,13 +590,12 @@ class World {
    * Initialize loosing game
    */
   looseGame() {
-    this.playSound(this.character.die_sound, 0.4);
+    this.playStoppableSound(this.character.die_sound, 0.4);
     this.gameover = true;
     setTimeout(() => {
       this.showEndscreen('loose');
-      this.playSound(this.loose, 0.5);
+      this.playMusic(this.loose, 0.5);
     }, 1000)
-
   }
 
 
@@ -518,11 +604,9 @@ class World {
    */
   winGame() {
     setTimeout(() => {
-      this.killedEndboss = 1;
-      this.endboss.dieCharacter();
-      this.playSound(this.endboss.falling, 0.4);
-      this.playSound(this.win, 0.4);
+      this.endboss.killEndboss();
       this.gameover = true;
+      this.playMusic(this.win, 0.4);
     }, 1000);
     setTimeout(() => {
       this.showEndscreen('win');
@@ -552,7 +636,6 @@ class World {
     document.getElementById('killed-endboss').innerHTML = `${this.killedEndboss} x 7500`;
     document.getElementById('endgame-points').innerHTML = `${this.points - this.collectedBottles * 200 + this.statusBarBottle.bottles * 200}`;
   }
-
 }
 
 

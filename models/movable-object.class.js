@@ -87,7 +87,7 @@ class MovableObject extends DrawableObject {
    */
   hit() {
     if (this instanceof Character) {
-      this.energy -= 5;
+      this.energy -= 2;
       this.resetIdleCount();
     } else {
       this.energy -= 25;
@@ -134,9 +134,7 @@ class MovableObject extends DrawableObject {
    * @param {Array} images 
    */
   playAnimation(images) {
-    //Walk animation - Bilder durchiterieren
     let i = this.currentImage % images.length;
-    //i liefert 0, 1, 2, 3, 4, 5, 0, 1, 2 .... Endlosschleife
     let path = images[i];
     this.img = this.imageCache[path];
     this.currentImage++;
@@ -203,7 +201,7 @@ class MovableObject extends DrawableObject {
 /**
  * Minimalizes Object
  */
-  removeObject() {
+  removeEnemy() {
     setTimeout(() => {
       this.played = true;
       this.width = 0;

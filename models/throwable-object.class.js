@@ -43,12 +43,11 @@ class ThrowableObject extends MovableObject {
 
   
   throw() {
-    world.playSound(this.throwing_sound, 0.4);
+    world.playStoppableSound(this.throwing_sound, 0.4);
     this.speedY = 20; 
     if(!this.splashed) {
       this.applyGravity();
     }
-
     setInterval(() => {
       if(this.isAboveGround()) {
         this.x += this.speedX;
@@ -58,25 +57,31 @@ class ThrowableObject extends MovableObject {
 
 
   /**
-   * Checks if either bottle hits enemy or ground
+   * Checks if either bottle hits enemy or ground 
    * @returns boolean
    */
   checkSplash() {
     setInterval(() => {
       if(!this.isAboveGround() || this.enemyHit) {
         if(this.splashed) {
-          this.width = 0;
-          this.height = 0;
-          this.loadImage('./img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png');
+          this.removeObject();
         } else {
-          world.playSound(this.splash_sound, 1);
-          this.playAnimation(this.IMAGES_SPLASH); 
-          this.splashed = true; //plays splash-imgs only once 
+          this.splashBottle();
         }
       } else {
         this.playAnimation(this.IMAGES_ROTATE);
       }
     }, 100)
+  }
+
+
+  /**
+   * Splash Bottle
+   */
+  splashBottle() {
+    world.playStoppableSound(this.splash_sound, 1);
+    this.playAnimation(this.IMAGES_SPLASH); 
+    this.splashed = true; //plays splash-imgs only once 
   }
 
 }

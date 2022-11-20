@@ -84,7 +84,6 @@ class Endboss extends MovableObject {
           this.playAnimation(this.IMAGES_WALKING);
           this.moveLeft();
         } else if(!this.energy && !this.dead) {
-          this.dieEndboss();
           this.playAnimation(this.IMAGES_DEAD);
           this.dead = true;
         } else if (this.dead) {
@@ -95,6 +94,12 @@ class Endboss extends MovableObject {
         }
       }
     }, 150) 
+  }
+
+  killEndboss() {
+    world.killEndboss = 1;
+    this.dieCharacter();
+    world.playStoppableSound(this.falling, 0.4);
   }
 
 }

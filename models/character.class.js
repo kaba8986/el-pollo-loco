@@ -81,9 +81,11 @@ class Character extends MovableObject {
 
   world;
   walking_sound = new Audio('./audio/walking.mp3');
+  snoring_sound = new Audio('./audio/snoring.mp3');
   hurt_sound = new Audio('./audio/hurt.mp3');
   jump_sound = new Audio('./audio/jump.mp3');
   die_sound = new Audio('./audio/dying.mp3');
+  hearts = 0;
 
 
   constructor() {
@@ -109,7 +111,7 @@ class Character extends MovableObject {
   animate() {
     setInterval(() => { this.increaseIdleCount(); }, 1000); //Idle-Counter
     setStoppableInterval(() => { this.checkIfMoving(); }, 1000 / 60); //Play Moving Sounds and set Actions
-    setInterval(() => { this.playCharacterAnimations(); }, 100); //Show Images  
+    setStoppableInterval(() => { this.playCharacterAnimations(); }, 100); //Show Images  
   }
 
 
@@ -118,7 +120,7 @@ class Character extends MovableObject {
    */
   checkIfMoving() {
     if (!paused) {
-      world.pauseSound(this.walking_sound);
+      world.pauseMusic(this.walking_sound);
       this.moveCharacterRight();
       this.moveCharacterLeft();
       this.letCharacterJump();
@@ -152,8 +154,11 @@ class Character extends MovableObject {
   checkIfCharacterRests() {
     if (this.isAsleep()) {
       this.playAnimation(this.ITEMS_IDLE_LONG);
+      world.playStoppableSound(this.snoring_sound, 1);
     } else if (this.isNodding()) {
       this.playAnimation(this.ITEMS_IDLE);
+    } else {
+      world.pauseMusic(this.snoring_sound);
     }
   }
 
@@ -162,7 +167,7 @@ class Character extends MovableObject {
   moveCharacterRight() {
     if (this.world.keyboard.RIGHT && this.distanceTo(world.endboss) < 50 && !this.isDead()) {
       this.moveRight();
-      world.playSound(this.walking_sound, 0.5);
+      world.playStoppableSound(this.walking_sound, 0.5);
       this.resetIdleCount();
     }
   }
@@ -172,7 +177,7 @@ class Character extends MovableObject {
     if (this.world.keyboard.LEFT && this.x > 0 && !this.isDead()) {
       this.moveLeft();
       this.otherDirection = true;
-      world.playSound(this.walking_sound, 0.5);
+      world.playStoppableSound(this.walking_sound, 0.5);
       this.resetIdleCount();
     }
   }
@@ -182,7 +187,7 @@ class Character extends MovableObject {
   letCharacterJump() {
     if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.isDead()) {
       this.jump();
-      world.playSound(this.jump_sound, 0.5);
+      world.playStoppableSound(this.jump_sound, 0.5);
       this.resetIdleCount();
     }
   }
@@ -201,7 +206,7 @@ class Character extends MovableObject {
   //Play Animation for getting Hurt
   playAnimationHurt() {
     this.playAnimation(this.IMAGES_HURT);
-    world.playSound(this.hurt_sound, 0.7);
+    world.playStoppableSound(this.hurt_sound, 0.7);
   }
 
 
@@ -230,5 +235,15 @@ class Character extends MovableObject {
   //Check if Character fell asleep
   isAsleep() {
     return this.idleCount > 8;
+  }
+
+
+  //Heal Character
+  healCharacter() {
+    this.energy += 20;
+    if (this.energy > 100) {
+      this.energy = 100;
+    }
+    world.statusBarHealth.setPercentage(this.energy);
   }
 }

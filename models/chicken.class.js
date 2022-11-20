@@ -51,9 +51,9 @@ class Chicken extends MovableObject {
   
   //Play Animation for Dead
   playAnimationDead() {
-    world.playSound(this.kill_sound, 0.3);
+    world.playStoppableSound(this.kill_sound, 0.3);
     this.playAnimation(this.IMAGES_DEAD);
-    this.removeObject();
+    this.removeEnemy();
   }
 
 
